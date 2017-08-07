@@ -16,4 +16,5 @@
     <string name="title_fragment_informacion_viaje">Información del viaje</string>
 
     <string name="section_format">Hola mundo desde la sección: %1$d</string>
+    <string name="title_activity_seguimiento_viaje">Map</string>
 </resources>

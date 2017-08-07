@@ -1,7 +1,7 @@
 package com.example.logistik.logistikgodemo;
 
 /**
- * Created by Jorge Enríquez on 06/08/2017.
+ * Created by Jorge Enríquez and uriel ;) on 06/08/2017.
  */
 import android.support.v4.app.Fragment;
 import android.os.Bundle;

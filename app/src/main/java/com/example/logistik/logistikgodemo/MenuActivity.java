@@ -79,7 +79,7 @@ public class MenuActivity extends AppCompatActivity
             intent = new Intent(MenuActivity.this, ViajeCursoActivity.class);
 
         } else if (id == R.id.nav_enviar) {
-
+            intent = new Intent(MenuActivity.this, Activity_seguimientoViaje.class);
         } else if (id == R.id.nav_ajustes) {
 
         } else if (id == R.id.nav_acercade) {
