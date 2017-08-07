@@ -1,0 +1,19 @@
+<resources>
+    <string name="app_name">Logistikgo Demo</string>
+
+    <string name="dummy_button">Dummy Button</string>
+    <string name="dummy_content">DUMMY\nCONTENT</string>
+    <string name="title_activity_menu">Logisti-k GO</string>
+    <string name="empresa">Logisti-k de México</string>
+    <string name="slogan">Asegurate que suceda</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="action_settings">Ajustes</string>
+    <string name="title_activity_viaje_curso">Viaje en curso</string>
+    <string name="title_fragment_viaje_curso">Viaje en curso</string>
+    <string name="title_fragment_informacion_viaje">Información del viaje</string>
+
+    <string name="section_format">Hola mundo desde la sección: %1$d</string>
+</resources>
