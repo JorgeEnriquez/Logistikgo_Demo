@@ -3,6 +3,7 @@ package com.example.logistik.logistikgodemo;
 /**
  * Created by Jorge Enríquez and uriel ;) on 06/08/2017.
  */
+import android.net.Uri;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -11,7 +12,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
-public class ViajeCursoTab extends Fragment {
+public class ViajeCursoTab extends Fragment implements Activity_seguimientoViaje.OnFragmentInteractionListener {
     Button button;
     TextView textView;
 
@@ -39,5 +40,10 @@ public class ViajeCursoTab extends Fragment {
             }
         });
         return rootView;
+    }
+
+    @Override
+    public void onFragmentInteraction(Uri uri) {
+
     }
 }
