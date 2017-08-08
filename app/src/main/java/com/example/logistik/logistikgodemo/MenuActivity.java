@@ -1,6 +1,7 @@
 package com.example.logistik.logistikgodemo;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -13,9 +14,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.TextView;
 
 public class MenuActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+        implements NavigationView.OnNavigationItemSelectedListener, InformacionTab.OnFragmentInteractionListener {
+    TextView textView;
+    String dato;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,6 +36,9 @@ public class MenuActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        textView = (TextView)findViewById(R.id.txtBienvenido);
+        dato = textView.getText().toString();
     }
 
     @Override
@@ -77,8 +84,10 @@ public class MenuActivity extends AppCompatActivity
             // Handle the camera action
         } else if (id == R.id.nav_viajecurso) {
             intent = new Intent(MenuActivity.this, ViajeCursoActivity.class);
+            intent.putExtra("DATO", dato);
+            //Cambios
 
-        } else if (id == R.id.nav_enviar) {
+        } else if (id == R.id.nav_evidencias) {
             intent = new Intent(MenuActivity.this, Activity_seguimientoViaje.class);
         } else if (id == R.id.nav_ajustes) {
 
@@ -93,5 +102,10 @@ public class MenuActivity extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    @Override
+    public void onFragmentInteraction(Uri uri) {
+
     }
 }

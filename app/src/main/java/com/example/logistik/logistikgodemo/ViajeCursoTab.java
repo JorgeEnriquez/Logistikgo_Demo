@@ -28,7 +28,6 @@ import com.google.android.gms.maps.model.MarkerOptions;
 
 public class ViajeCursoTab extends Fragment implements OnMapReadyCallback{
     Button button;
-    TextView textView;
     GoogleMap mgoogleMap;
     MapView mapView;
     View view;
