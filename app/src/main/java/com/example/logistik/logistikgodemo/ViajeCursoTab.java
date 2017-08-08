@@ -64,7 +64,6 @@ public class ViajeCursoTab extends Fragment implements OnMapReadyCallback{
     @Override
     public void onMapReady(GoogleMap googleMap) {
         MapsInitializer.initialize(getContext());
-        //Jorge
         mgoogleMap = googleMap;
         googleMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
         googleMap.addMarker(new MarkerOptions().position(new LatLng(22.1202234, -101.0202731)).title("Logisti-K de México").snippet("Asegurate que suceda"));
