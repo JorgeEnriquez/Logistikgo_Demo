@@ -96,8 +96,4 @@ public class Activity_seguimientoViaje extends FragmentActivity implements OnMap
         locationManager.requestLocationUpdates(locationManager.GPS_PROVIDER,1000,0,locationListener);
     }
 
-    public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
-        void onFragmentInteraction(Uri uri);
-    }
 }

@@ -3,6 +3,12 @@ package com.example.logistik.logistikgodemo;
 /**
  * Created by Jorge Enríquez and uriel ;) on 06/08/2017.
  */
+import android.Manifest;
+import android.content.Context;
+import android.content.pm.PackageManager;
+import android.location.Location;
+import android.location.LocationManager;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -72,4 +78,5 @@ public class ViajeCursoTab extends Fragment implements OnMapReadyCallback{
         CameraPosition position = CameraPosition.builder().target(new LatLng(22.1202234, -101.0202731)).zoom(15).bearing(0).tilt(45).build();
         googleMap.moveCamera(CameraUpdateFactory.newCameraPosition(position));
     }
+
 }
