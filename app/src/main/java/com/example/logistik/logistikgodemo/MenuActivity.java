@@ -85,6 +85,7 @@ public class MenuActivity extends AppCompatActivity
         } else if (id == R.id.nav_viajecurso) {
             intent = new Intent(MenuActivity.this, ViajeCursoActivity.class);
             intent.putExtra("DATO", dato);
+            //Cambios
 
         } else if (id == R.id.nav_evidencias) {
             intent = new Intent(MenuActivity.this, Activity_seguimientoViaje.class);
