@@ -11,9 +11,9 @@
             android:icon="@drawable/ic_menu_avion"
             android:title="Viaje en curso" />
         <item
-            android:id="@+id/nav_enviar"
+            android:id="@+id/nav_evidencias"
             android:icon="@drawable/ic_menu_send"
-            android:title="Enviar" />
+            android:title="Evidencias" />
     </group>
 
     <item android:title="Communicate">
