@@ -8,12 +8,18 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 public class InformacionTab extends Fragment {
+    View view;
+    TextView textView;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_informacion, container, false);
-        return rootView;
+        View view = inflater.inflate(R.layout.fragment_informacion, container, false);
+        textView = (TextView)view.findViewById(R.id.txtCantidad);
+        textView.setText("0001");
+        return view;
     }
 }
