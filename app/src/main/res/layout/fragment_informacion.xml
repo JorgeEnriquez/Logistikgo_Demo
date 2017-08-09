@@ -43,6 +43,7 @@
                         android:id="@+id/txtCteOrigen"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:fontFamily=""
                         android:layout_weight="1"
                         android:text="Niagara Botting, LLC" />
 

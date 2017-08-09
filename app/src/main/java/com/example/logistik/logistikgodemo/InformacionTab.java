@@ -3,7 +3,9 @@ package com.example.logistik.logistikgodemo;
 /**
  * Created by Jorge Enríquez y por uriel ;) on 06/08/2017.
  */
+import android.content.Context;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.net.Uri;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
@@ -21,7 +23,6 @@ public class InformacionTab extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_informacion, container, false);
         textView = (TextView)view.findViewById(R.id.txtCantidad);
-//        textView.setText("0001");
 
         Bundle bundle = getActivity().getIntent().getExtras();
 
