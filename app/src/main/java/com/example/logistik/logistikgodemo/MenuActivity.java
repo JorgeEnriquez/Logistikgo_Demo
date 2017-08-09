@@ -20,6 +20,7 @@ public class MenuActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, InformacionTab.OnFragmentInteractionListener {
     TextView textUsuario;
     String dato;
+    View view;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,11 +38,13 @@ public class MenuActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        textUsuario = (TextView) findViewById(R.id.txtBienvenido);
-       // textUsuario.setText("Hola");
+        view = navigationView.getHeaderView(0);
+
+        textUsuario = (TextView)view.findViewById(R.id.textUsuario);
+
         Bundle bundle = this.getIntent().getExtras();
         if (bundle != null)
-         textUsuario.setText(bundle.getString("NameUsuario"));
+            textUsuario.setText(bundle.getString("NameUsuario"));
     }
 
 
