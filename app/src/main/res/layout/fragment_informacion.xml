@@ -273,6 +273,21 @@
                 </LinearLayout>
             </LinearLayout>
 
+            <TextView
+                android:id="@+id/textDatos"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:text="TextView" />
+
+            <Button
+                android:id="@+id/button2"
+                android:onClick="onDatosClick"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Button" />
+
         </LinearLayout>
+
     </ScrollView>
 </RelativeLayout>

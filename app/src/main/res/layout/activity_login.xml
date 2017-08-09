@@ -95,6 +95,7 @@
             app:layout_constraintTop_toBottomOf="@+id/editContrasena"
             app:layout_constraintHorizontal_bias="0.488" />
 
+
         <ImageView
             android:id="@+id/imageView6"
             android:layout_width="50dp"

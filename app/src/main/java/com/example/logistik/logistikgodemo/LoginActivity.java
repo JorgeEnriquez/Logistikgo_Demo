@@ -55,22 +55,6 @@ public class LoginActivity extends AppCompatActivity {
 
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
-
-
     public void onMenuClick(View view) throws ExecutionException, InterruptedException, JSONException {
 
         //API PRODUCCION
@@ -131,7 +115,7 @@ public class LoginActivity extends AppCompatActivity {
         return resJson;
     }
 
-    public  JSONObject GetHttpResponse(String strURL, JSONObject jData,String strRequest_method, int read_timeout, int connection_timeout)  {
+    public static JSONObject GetHttpResponse(String strURL, JSONObject jData, String strRequest_method, int read_timeout, int connection_timeout)  {
         String strRes = null;
         String inputLine;
         JSONObject jRes = null;
@@ -238,7 +222,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     //CLASS ASYNC REQUEST
-    public class HttpGetRequest extends AsyncTask<JSONObject, Void, JSONObject> {
+    public static class HttpGetRequest extends AsyncTask<JSONObject, Void, JSONObject> {
 
         //VARIABLES DE CONFIGURACION DE LA CONEXION
         public static final String REQUEST_METHOD = "POST";
@@ -273,11 +257,6 @@ public class LoginActivity extends AppCompatActivity {
             }
 
             return resJson;
-        }
-
-        @Override
-        protected void onPostExecute(JSONObject s) {
-            super.onPostExecute(s);
         }
 
     }
