@@ -99,13 +99,16 @@ public class LoginActivity extends AppCompatActivity {
 
         //REALIZA LA PETICION
         JSONObject jstrResult = GetResponse(jdata,jParams);
-        if (jstrResult.getString("NombreUsuario") != ""){
+        String NombreUsuario = jstrResult.getString("NombreUsuario");
 
-            jstrResult.getString("NombreUsuario");
-            Toast.makeText(this, "Bienvenido " + jstrResult.getString("NombreUsuario") , Toast.LENGTH_SHORT).show();
+        if (NombreUsuario != ""){
+
+
+            Toast.makeText(this, "Bienvenido " + NombreUsuario , Toast.LENGTH_SHORT).show();
 
             Context currentContext = this;
             Intent activity_login = new Intent(currentContext, MenuActivity.class);
+            activity_login.putExtra("NameUsuario",NombreUsuario);
             startActivity(activity_login);
             finish();
         }

@@ -18,7 +18,7 @@ import android.widget.TextView;
 
 public class MenuActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, InformacionTab.OnFragmentInteractionListener {
-    TextView textView;
+    TextView textUsuario;
     String dato;
 
     @Override
@@ -37,9 +37,13 @@ public class MenuActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        textView = (TextView)findViewById(R.id.txtBienvenido);
-        dato = textView.getText().toString();
+        textUsuario = (TextView) findViewById(R.id.txtBienvenido);
+       // textUsuario.setText("Hola");
+        Bundle bundle = this.getIntent().getExtras();
+        if (bundle != null)
+         textUsuario.setText(bundle.getString("NameUsuario"));
     }
+
 
     @Override
     public void onBackPressed() {

@@ -26,6 +26,7 @@ public class InformacionTab extends Fragment {
 
         Bundle bundle = getActivity().getIntent().getExtras();
 
+
         if (bundle != null)
             textView.setText(bundle.getString("DATO"));
         return view;
