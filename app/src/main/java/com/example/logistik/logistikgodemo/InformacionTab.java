@@ -14,6 +14,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -31,6 +32,7 @@ import java.net.URL;
 import java.util.concurrent.ExecutionException;
 
 public class InformacionTab extends Fragment {
+    Button button;
     View view;
     TextView textView;
     String strIDViaje;
@@ -45,6 +47,23 @@ public class InformacionTab extends Fragment {
 
         if (bundle != null)
             textView.setText(bundle.getString("DATO"));
+
+        button = (Button) view.findViewById(R.id.btn_Datos);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                try {
+                    datosg(view);
+                } catch (ExecutionException e) {
+                    e.printStackTrace();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+
         return view;
     }
 
@@ -54,7 +73,7 @@ public class InformacionTab extends Fragment {
     }
 
     // TODO: begin API
-    public void onDatosClick(View view) throws ExecutionException, InterruptedException, JSONException {
+    public void datosg(View view) throws ExecutionException, InterruptedException, JSONException {
 
         //API PRODUCCION
         String strURL = "http://api.logistikgo.com/api/Viaje/GetDatosViaje";
