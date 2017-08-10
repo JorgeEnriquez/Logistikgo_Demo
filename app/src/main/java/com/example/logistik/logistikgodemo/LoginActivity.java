@@ -58,7 +58,7 @@ public class LoginActivity extends AppCompatActivity {
     public void onMenuClick(View view) throws ExecutionException, InterruptedException, JSONException {
 
         //API PRODUCCION
-        String strURL = "http://api.logistikgo.com/api/Usuarios/ValidarUsuario";
+        String strURL = "https://api-debug.logistikgo.com/api/Usuarios/ValidarUsuario";
         //API DEBUG VISUAL STUDIO
 //        String strURL = "http://10.0.2.2:63510/api/Usuarios/ValidarUsuario";
         strUsuario =  editUsuario.getText().toString();
@@ -92,14 +92,17 @@ public class LoginActivity extends AppCompatActivity {
 
             Context currentContext = this;
             Intent activity_login = new Intent(currentContext, MenuActivity.class);
-            Intent InformacionTab = new Intent(currentContext, InformacionTab.class);
             activity_login.putExtra("NameUsuario",NombreUsuario);
+
+
+            Intent InformacionTab = new Intent(currentContext, ViajeCursoActivity.class);
             InformacionTab.putExtra("IDViajeProceso",jstrResult.getString("IDViajeProceso"));
             InformacionTab.putExtra("StatusProceso",jstrResult.getString("StatusProceso"));
-
-            startActivity(activity_login);
             startActivity(InformacionTab);
             finish();
+            startActivity(activity_login);
+
+
         }
         else{
             Toast.makeText(this, "Usuario incorrecto" , Toast.LENGTH_SHORT).show();

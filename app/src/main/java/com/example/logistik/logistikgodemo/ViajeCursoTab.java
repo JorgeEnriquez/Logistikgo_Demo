@@ -43,15 +43,21 @@ public class ViajeCursoTab extends Fragment implements OnMapReadyCallback {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-//        SupportMapFragment mapFragment = (SupportMapFragment) getActivity().getSupportFragmentManager()
-//                .findFragmentById(R.id.map);
-//        mapFragment.getMapAsync(this);
+
+
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_viaje_curso, container, false);
+
+        TextView textstaus = (TextView) view.findViewById(R.id.textstatusproceso);
+
+        Bundle bundle = getActivity().getIntent().getExtras();
+        if (bundle != null)
+            textstaus.setText(bundle.getString("StatusProceso"));
+
         button = (Button) view.findViewById(R.id.btn_viaje_curso);
         button.setText("Llegada Origen");
 
@@ -109,6 +115,7 @@ public class ViajeCursoTab extends Fragment implements OnMapReadyCallback {
     LocationListener locationListener = new LocationListener() {
         @Override
         public void onLocationChanged(Location location) {
+
             actualizarUbicacion(location);
         }
 

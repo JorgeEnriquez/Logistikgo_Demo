@@ -21,6 +21,7 @@ public class MenuActivity extends AppCompatActivity
     TextView textUsuario;
     String dato;
     View view;
+    String Nameusuario = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,9 +44,15 @@ public class MenuActivity extends AppCompatActivity
         textUsuario = (TextView)view.findViewById(R.id.textUsuario);
 
         Bundle bundle = this.getIntent().getExtras();
-        if (bundle != null)
-            textUsuario.setText(bundle.getString("NameUsuario"));
-    }
+        if (bundle != null) {
+            if(bundle.getString("NameUsuario") != ""){
+                Nameusuario = bundle.getString("NameUsuario");
+                textUsuario.setText(Nameusuario);
+            }
+
+
+        }
+}
 
 
     @Override
