@@ -55,7 +55,7 @@
                         android:text="Origen" />
 
                     <TextView
-                        android:id="@+id/txtCteOrigen"
+                        android:id="@+id/textCteOrigen"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:fontFamily=""
@@ -77,7 +77,7 @@
                         android:text="Destino" />
 
                     <TextView
-                        android:id="@+id/txtCteDestino"
+                        android:id="@+id/textCteDestino"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="Nueva Wal-Mart de México, S. de R.L. de C.V." />
@@ -99,7 +99,7 @@
                     android:orientation="vertical">
 
                     <TextView
-                        android:id="@+id/txtCdOrigen"
+                        android:id="@+id/textCdOrigen"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginRight="4dp"
@@ -113,7 +113,7 @@
                     android:orientation="vertical">
 
                     <TextView
-                        android:id="@+id/txtCdDestino"
+                        android:id="@+id/textCdDestino"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="Villa Hermosa, Tabasco" />
@@ -121,7 +121,6 @@
             </LinearLayout>
 
             <TextView
-                android:id="@+id/textView25"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="1dp"
@@ -157,7 +156,7 @@
                         android:text="Embalaje" />
 
                     <TextView
-                        android:id="@+id/txtEmbalaje"
+                        android:id="@+id/textEmbalaje"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="Tarima" />
@@ -178,7 +177,7 @@
                         android:text="Clasificación"/>
 
                     <TextView
-                        android:id="@+id/txtClasificacion"
+                        android:id="@+id/textClasificacion"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="Alimenticio" />
@@ -198,7 +197,7 @@
                         android:text="Descripción" />
 
                     <TextView
-                        android:id="@+id/txtDescripcion"
+                        android:id="@+id/textDescripcion"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="Agua" />
@@ -226,7 +225,7 @@
                         android:textStyle="bold" />
 
                     <TextView
-                        android:id="@+id/txtCantidad"
+                        android:id="@+id/textCantidad"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -247,7 +246,7 @@
                         android:textStyle="bold" />
 
                     <TextView
-                        android:id="@+id/txtPeso"
+                        android:id="@+id/textPeso"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="28 Toneladas" />
@@ -266,7 +265,7 @@
                         android:textStyle="bold" />
 
                     <TextView
-                        android:id="@+id/txtVolumen"
+                        android:id="@+id/textVolumen"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="0 m3" />

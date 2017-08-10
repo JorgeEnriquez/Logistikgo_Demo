@@ -32,37 +32,44 @@ import java.net.URL;
 import java.util.concurrent.ExecutionException;
 
 public class InformacionTab extends Fragment {
-    Button button;
-    View view;
-    TextView textView;
+    TextView textView, textViewClienteOrigen;
     String strIDViaje;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_informacion, container, false);
-        textView = (TextView)view.findViewById(R.id.txtCantidad);
+        textView = (TextView) view.findViewById(R.id.textCteOrigen);
+        textViewClienteOrigen = (TextView) view.findViewById(R.id.textCteOrigen);
 
         Bundle bundle = getActivity().getIntent().getExtras();
 
         if (bundle != null)
             textView.setText(bundle.getString("DATO"));
-
-        button = (Button) view.findViewById(R.id.btn_Datos);
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                try {
-                    datosg(view);
-                } catch (ExecutionException e) {
-                    e.printStackTrace();
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-        });
+        try {
+            datosg(view);
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+//        button = (Button) view.findViewById(R.id.btn_Datos);
+//        button.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                try {
+//                    datosg(view);
+//                } catch (ExecutionException e) {
+//                    e.printStackTrace();
+//                } catch (InterruptedException e) {
+//                    e.printStackTrace();
+//                } catch (JSONException e) {
+//                    e.printStackTrace();
+//                }
+//            }
+//        });
 
         return view;
     }
@@ -76,15 +83,15 @@ public class InformacionTab extends Fragment {
     public void datosg(View view) throws ExecutionException, InterruptedException, JSONException {
 
         //API PRODUCCION
-        String strURL = "http://api.logistikgo.com/api/Viaje/GetDatosViaje";
-        strIDViaje =  "130";
-        JSONObject jdata=new JSONObject();
-        JSONObject jParams=new JSONObject();
+        String strURL = "https://api-test.logistikgo.com/api/Viaje/GetDatosViaje";
+        strIDViaje = "130";
+        JSONObject jdata = new JSONObject();
+        JSONObject jParams = new JSONObject();
 
         try {
-            jdata.put("strURL",strURL);
+            jdata.put("strURL", strURL);
 
-            jParams.put("strIDViaje",strIDViaje);
+            jParams.put("strIDViaje", strIDViaje);
 
         } catch (JSONException e) {
             e.printStackTrace();
@@ -95,45 +102,36 @@ public class InformacionTab extends Fragment {
 //            tvIsConnected.setBackgroundColor(0xFF00CC00);
 //            tvIsConnected.setText("You are connected");
 
-        //REALIZA LA PETICION
-        JSONObject jstrResult = GetResponse(jdata,jParams);
-        String strClienteOrigen = jstrResult.getString("ClienteOrigen");
+        //REALIZA LA PETICIO
+        JSONObject jResult = GetResponse(jdata, jParams);
 
-        if (strClienteOrigen != ""){
-
-
-            Toast.makeText(getActivity(), "Bienvenido " + strClienteOrigen , Toast.LENGTH_SHORT).show();
-        }
-        else{
-            Toast.makeText(getActivity(), "datos incorrectos" , Toast.LENGTH_SHORT).show();
-        }
+        textViewClienteOrigen.setText(jResult.getString("ClienteOrigen"));
 
 
 
 //        }
     }
-    public JSONObject GetResponse(JSONObject jdata,JSONObject jParams) throws ExecutionException, InterruptedException, JSONException {
+
+    public JSONObject GetResponse(JSONObject jdata, JSONObject jParams) throws ExecutionException, InterruptedException, JSONException {
         JSONObject resJson = null;
 
         //Instantiate new instance of our class
         LoginActivity.HttpGetRequest getRequest = new LoginActivity.HttpGetRequest();
 
-        resJson = getRequest.execute(jdata,jParams).get();
+        resJson = getRequest.execute(jdata, jParams).get();
 
         return resJson;
     }
 
-    public static JSONObject GetHttpResponse(String strURL, JSONObject jData, String strRequest_method, int read_timeout, int connection_timeout)  {
-        String strRes = null;
+    public static JSONObject GetHttpResponse(String strURL, JSONObject jData, String strRequest_method, int read_timeout, int connection_timeout) {
+
         String inputLine;
         JSONObject jRes = null;
-        JSONObject _jMeta = null;
-        JSONObject _jData = null;
-        JSONObject _jError = null;
+
 
         try {
             URL urlCurrent = new URL(strURL);
-            HttpURLConnection connection =(HttpURLConnection)urlCurrent.openConnection();
+            HttpURLConnection connection = (HttpURLConnection) urlCurrent.openConnection();
 
             connection.setRequestMethod(strRequest_method);
             connection.setReadTimeout(read_timeout);
@@ -156,20 +154,20 @@ public class InformacionTab extends Fragment {
             int HttpResult = connection.getResponseCode();
 
             //VERIFICAR SI LA CONEXION SE REALIZO DE FORMA CORRECTA = 200
-            if(HttpResult == HttpURLConnection.HTTP_OK){
+            if (HttpResult == HttpURLConnection.HTTP_OK) {
 
                 InputStreamReader streamReader = new InputStreamReader(connection.getInputStream());
 
                 StringBuilder stringBuilder = new StringBuilder();
-                String strResponseMessage = connection.getResponseMessage();
-                JsonReader jsonReader = new JsonReader(streamReader);
+             //   String strResponseMessage = connection.getResponseMessage();
+            //    JsonReader jsonReader = new JsonReader(streamReader);
 
                 //LEER JSON MANUAL
                 //Create a new buffered reader and String Builder
                 BufferedReader reader = new BufferedReader(streamReader);
-                StringBuilder _stringBuilder = new StringBuilder();
+              //  StringBuilder _stringBuilder = new StringBuilder();
                 //Check if the line we are reading is not null
-                while((inputLine = reader.readLine()) != null){
+                while ((inputLine = reader.readLine()) != null) {
                     stringBuilder.append(inputLine);
                 }
                 //Close our InputStream and Buffered reader
@@ -179,18 +177,16 @@ public class InformacionTab extends Fragment {
                 String _strRes = stringBuilder.toString();
                 JSONObject obj = new JSONObject(_strRes);
                 JSONObject paramMeta = obj.getJSONObject("jMeta");
-                String __strResponse = paramMeta.getString("ResponseCode");
+          //     String __strResponse = paramMeta.getString("ResponseCode");
 
                 String strResponse = paramMeta.getString("Response");
 
-                if(strResponse.equals("OK")){
+                if (strResponse.equals("OK")) {
                     jRes = obj.getJSONObject("jData");
-                }
-                else{
+                } else {
                     jRes = obj.getJSONObject("jDataError");
                 }
-            }
-            else{
+            } else {
                 String strResponse = connection.getResponseMessage();
                 InputStreamReader streamError = new InputStreamReader(connection.getErrorStream());
                 JsonReader jsonReader = new JsonReader(streamError);
@@ -200,7 +196,7 @@ public class InformacionTab extends Fragment {
                 while (jsonReader.hasNext()) { // Loop through all keys
                     String key = jsonReader.nextName(); // Fetch the next key
                     if (key.equals("Message")) { // VERIFICA EL NOMBRE DEL CAMPO
-                        strRes = jsonReader.nextString();
+                     //   strRes = jsonReader.nextString();
                         break; // Break out of the loop
                     } else {
                         jsonReader.skipValue(); // Skip values of other keys
@@ -208,7 +204,7 @@ public class InformacionTab extends Fragment {
                 }
                 jsonReader.close();
 
-                Log.d("ERROR",strResponse);
+                Log.d("ERROR", strResponse);
             }
         } catch (MalformedURLException e) {
             e.printStackTrace();
@@ -222,8 +218,8 @@ public class InformacionTab extends Fragment {
     }
 
     // VERIFICAR SI EXISTE CONEXIÓN A INTERNET
-    public boolean isConnected(){
-        ConnectivityManager connMgr = (ConnectivityManager) getActivity(). getSystemService(getActivity().CONNECTIVITY_SERVICE);
+    public boolean isConnected() {
+        ConnectivityManager connMgr = (ConnectivityManager) getActivity().getSystemService(getActivity().CONNECTIVITY_SERVICE);
         NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
 
         return (networkInfo != null && networkInfo.isConnected());
@@ -258,7 +254,7 @@ public class InformacionTab extends Fragment {
 
             try {
 
-                resJson = GetHttpResponse(stringUrl,jObject[1],REQUEST_METHOD,READ_TIMEOUT,CONNECTION_TIMEOUT);
+                resJson = GetHttpResponse(stringUrl, jObject[1], REQUEST_METHOD, READ_TIMEOUT, CONNECTION_TIMEOUT);
 
             } catch (Exception e) {
                 e.printStackTrace();
