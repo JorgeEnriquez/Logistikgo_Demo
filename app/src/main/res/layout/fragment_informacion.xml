@@ -26,7 +26,7 @@
                 android:layout_marginBottom="1dp"
                 android:textSize="16dp"
                 android:textStyle="bold"
-                android:text="Datos" />
+                android:text="@string/data_data" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -52,7 +52,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:textStyle="bold"
-                        android:text="Origen" />
+                        android:text="@string/origin_data" />
 
                     <TextView
                         android:id="@+id/textCteOrigen"
@@ -74,7 +74,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:textStyle="bold"
-                        android:text="Destino" />
+                        android:text="@string/destination_data" />
 
                     <TextView
                         android:id="@+id/textCteDestino"
@@ -126,7 +126,7 @@
                 android:layout_marginBottom="1dp"
                 android:textSize="16dp"
                 android:textStyle="bold"
-                android:text="Mercancía"
+                android:text="@string/goods_data"
                 />
 
             <LinearLayout
@@ -153,7 +153,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:textStyle="bold"
-                        android:text="Embalaje" />
+                        android:text="@string/packaging_data" />
 
                     <TextView
                         android:id="@+id/textEmbalaje"
@@ -174,7 +174,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:textStyle="bold"
-                        android:text="Clasificación"/>
+                        android:text="@string/classification_data"/>
 
                     <TextView
                         android:id="@+id/textClasificacion"
@@ -194,7 +194,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:textStyle="bold"
-                        android:text="Descripción" />
+                        android:text="@string/description_data" />
 
                     <TextView
                         android:id="@+id/textDescripcion"
@@ -221,7 +221,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="Cantidad"
+                        android:text="@string/quantity_data"
                         android:textStyle="bold" />
 
                     <TextView
@@ -242,7 +242,7 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Peso"
+                        android:text="@string/weight_data"
                         android:textStyle="bold" />
 
                     <TextView
@@ -261,7 +261,7 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Volumen"
+                        android:text="@string/volume"
                         android:textStyle="bold" />
 
                     <TextView
@@ -271,22 +271,6 @@
                         android:text="0 m3" />
                 </LinearLayout>
             </LinearLayout>
-
-            <TextView
-                android:id="@+id/textDatos"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center_horizontal"
-                android:text="TextView" />
-
-            <Button
-                android:id="@+id/btn_Datos"
-                android:onClick="onDatosClick"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Button" />
-
         </LinearLayout>
-
     </ScrollView>
 </RelativeLayout>

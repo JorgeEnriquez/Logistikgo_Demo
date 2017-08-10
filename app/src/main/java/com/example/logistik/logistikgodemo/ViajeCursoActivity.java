@@ -111,9 +111,9 @@ public class ViajeCursoActivity extends AppCompatActivity {
         public CharSequence getPageTitle(int position) {
             switch (position) {
                 case 0:
-                    return "Viaje";
+                    return getString(R.string.tab_travel);
                 case 1:
-                    return "Información";
+                    return getString(R.string.tab_data);
             }
             return null;
         }

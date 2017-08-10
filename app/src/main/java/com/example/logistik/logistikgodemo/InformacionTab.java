@@ -32,20 +32,26 @@ import java.net.URL;
 import java.util.concurrent.ExecutionException;
 
 public class InformacionTab extends Fragment {
-    TextView textView, textViewClienteOrigen;
+    TextView textViewCteOrigen, texViewCteDestino, textViewCdOrigen, textViewCdDestino, textViewEmbalaje,
+            textViewClasificacion, textViewDescripcion, textViewCantidad, textViewPeso, textViewVolumen;
     String strIDViaje;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_informacion, container, false);
-        textView = (TextView) view.findViewById(R.id.textCteOrigen);
-        textViewClienteOrigen = (TextView) view.findViewById(R.id.textCteOrigen);
 
-        Bundle bundle = getActivity().getIntent().getExtras();
+        textViewCteOrigen = (TextView) view.findViewById(R.id.textCteOrigen);
+        texViewCteDestino = (TextView) view.findViewById(R.id.textCteDestino);
+        textViewCdOrigen = (TextView) view.findViewById(R.id.textCdOrigen);
+        textViewCdDestino = (TextView) view.findViewById(R.id.textCdDestino);
+        textViewEmbalaje = (TextView) view.findViewById(R.id.textEmbalaje);
+        textViewClasificacion = (TextView) view.findViewById(R.id.textClasificacion);
+        textViewDescripcion = (TextView) view.findViewById(R.id.textDescripcion);
+        textViewCantidad = (TextView) view.findViewById(R.id.textCantidad);
+        textViewPeso = (TextView) view.findViewById(R.id.textCdDestino);
+        textViewVolumen = (TextView) view.findViewById(R.id.textVolumen);
 
-        if (bundle != null)
-            textView.setText(bundle.getString("DATO"));
         try {
             datosg(view);
         } catch (ExecutionException e) {
@@ -70,7 +76,6 @@ public class InformacionTab extends Fragment {
 //                }
 //            }
 //        });
-
         return view;
     }
 
@@ -105,9 +110,16 @@ public class InformacionTab extends Fragment {
         //REALIZA LA PETICIO
         JSONObject jResult = GetResponse(jdata, jParams);
 
-        textViewClienteOrigen.setText(jResult.getString("ClienteOrigen"));
-
-
+        textViewCteOrigen.setText(jResult.getString("ClienteOrigen"));
+        texViewCteDestino.setText(jResult.getString("ClienteDestino"));
+        textViewCdOrigen.setText(jResult.getString("CiudadOrigen"));
+        textViewCdDestino.setText(jResult.getString("CiudadDestino"));
+        textViewEmbalaje.setText(jResult.getString("Embalaje"));
+        textViewClasificacion.setText(jResult.getString("Clasificacion"));
+        textViewDescripcion.setText(jResult.getString("Descripcion"));
+        textViewCantidad.setText(jResult.getString("Cantidad"));
+        textViewPeso.setText(jResult.getString("Peso"));
+        textViewVolumen.setText(jResult.getString("Volumen"));
 
 //        }
     }
@@ -159,13 +171,13 @@ public class InformacionTab extends Fragment {
                 InputStreamReader streamReader = new InputStreamReader(connection.getInputStream());
 
                 StringBuilder stringBuilder = new StringBuilder();
-             //   String strResponseMessage = connection.getResponseMessage();
-            //    JsonReader jsonReader = new JsonReader(streamReader);
+                //   String strResponseMessage = connection.getResponseMessage();
+                //    JsonReader jsonReader = new JsonReader(streamReader);
 
                 //LEER JSON MANUAL
                 //Create a new buffered reader and String Builder
                 BufferedReader reader = new BufferedReader(streamReader);
-              //  StringBuilder _stringBuilder = new StringBuilder();
+                //  StringBuilder _stringBuilder = new StringBuilder();
                 //Check if the line we are reading is not null
                 while ((inputLine = reader.readLine()) != null) {
                     stringBuilder.append(inputLine);
@@ -177,7 +189,7 @@ public class InformacionTab extends Fragment {
                 String _strRes = stringBuilder.toString();
                 JSONObject obj = new JSONObject(_strRes);
                 JSONObject paramMeta = obj.getJSONObject("jMeta");
-          //     String __strResponse = paramMeta.getString("ResponseCode");
+                //     String __strResponse = paramMeta.getString("ResponseCode");
 
                 String strResponse = paramMeta.getString("Response");
 
@@ -196,7 +208,7 @@ public class InformacionTab extends Fragment {
                 while (jsonReader.hasNext()) { // Loop through all keys
                     String key = jsonReader.nextName(); // Fetch the next key
                     if (key.equals("Message")) { // VERIFICA EL NOMBRE DEL CAMPO
-                     //   strRes = jsonReader.nextString();
+                        //   strRes = jsonReader.nextString();
                         break; // Break out of the loop
                     } else {
                         jsonReader.skipValue(); // Skip values of other keys

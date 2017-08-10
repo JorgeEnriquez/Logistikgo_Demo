@@ -15,7 +15,7 @@
         android:textStyle="bold"
         android:textSize="25dp"
         android:textAlignment="center"
-        android:text="Bienvenido"
+        android:text="@string/text_welcome"
         app:layout_constraintTop_toTopOf="parent"
         android:layout_marginTop="125dp"
         android:layout_marginRight="8dp"
