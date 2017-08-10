@@ -92,8 +92,13 @@ public class LoginActivity extends AppCompatActivity {
 
             Context currentContext = this;
             Intent activity_login = new Intent(currentContext, MenuActivity.class);
+            Intent InformacionTab = new Intent(currentContext, InformacionTab.class);
             activity_login.putExtra("NameUsuario",NombreUsuario);
+            InformacionTab.putExtra("IDViajeProceso",jstrResult.getString("IDViajeProceso"));
+            InformacionTab.putExtra("StatusProceso",jstrResult.getString("StatusProceso"));
+
             startActivity(activity_login);
+            startActivity(InformacionTab);
             finish();
         }
         else{
