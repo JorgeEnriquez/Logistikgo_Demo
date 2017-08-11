@@ -29,22 +29,16 @@ import java.net.URL;
 import java.util.concurrent.ExecutionException;
 
 public class LoginActivity extends AppCompatActivity {
-
-
     EditText editUsuario;
     EditText editContrasena;
-    EditText editViaje;
     String strUsuario;
     String strContrasena;
-    String strIDViaje;
-
 //    public void onMenuClick(View view){
 //        Context currentContext = this;
 //        Intent activity_login = new Intent(currentContext, MenuActivity.class);
 //        startActivity(activity_login);
 //        finish();
 //    }
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
