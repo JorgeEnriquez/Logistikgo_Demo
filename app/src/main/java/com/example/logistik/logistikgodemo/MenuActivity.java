@@ -19,9 +19,8 @@ import android.widget.TextView;
 public class MenuActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, InformacionTab.OnFragmentInteractionListener {
     TextView textUsuario;
-    String dato;
     View view;
-    String Nameusuario = "";
+    String Nameusuario;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,26 +42,11 @@ public class MenuActivity extends AppCompatActivity
 
         textUsuario = (TextView)view.findViewById(R.id.textUsuario);
 
-        Bundle bundle = getIntent().getExtras();
+        Bundle bundle = this.getIntent().getExtras();
         if (bundle != null) {
-            if(bundle.getString("NameUsuario") != ""){
                 Nameusuario = bundle.getString("NameUsuario");
                 textUsuario.setText(Nameusuario);
-            }
         }
-    }
-
-    @Override
-    protected void onSaveInstanceState(Bundle outState){
-        super.onSaveInstanceState(outState);
-        outState.putString("CONT", Nameusuario);
-    }
-
-    @Override
-    protected void onRestoreInstanceState(Bundle savedInstanceState){
-        super.onRestoreInstanceState(savedInstanceState);
-        Nameusuario = savedInstanceState.getString("CONT");
-        textUsuario.setText(String.valueOf(Nameusuario));
     }
 
     @Override
