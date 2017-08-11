@@ -43,17 +43,27 @@ public class MenuActivity extends AppCompatActivity
 
         textUsuario = (TextView)view.findViewById(R.id.textUsuario);
 
-        Bundle bundle = this.getIntent().getExtras();
+        Bundle bundle = getIntent().getExtras();
         if (bundle != null) {
             if(bundle.getString("NameUsuario") != ""){
                 Nameusuario = bundle.getString("NameUsuario");
                 textUsuario.setText(Nameusuario);
             }
-
-
         }
-}
+    }
 
+    @Override
+    protected void onSaveInstanceState(Bundle outState){
+        super.onSaveInstanceState(outState);
+        outState.putString("CONT", Nameusuario);
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState){
+        super.onRestoreInstanceState(savedInstanceState);
+        Nameusuario = savedInstanceState.getString("CONT");
+        textUsuario.setText(String.valueOf(Nameusuario));
+    }
 
     @Override
     public void onBackPressed() {
