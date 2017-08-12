@@ -15,6 +15,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class MenuActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, InformacionTab.OnFragmentInteractionListener {
@@ -25,6 +26,13 @@ public class MenuActivity extends AppCompatActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        // recovering the instance state
+//        if (savedInstanceState != null) {
+//            Nameusuario = savedInstanceState.getString("NameUsuario");
+//            Toast.makeText(this, "Usuario " + Nameusuario, Toast.LENGTH_SHORT).show();
+//        }
+
         setContentView(R.layout.activity_menu);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -42,12 +50,38 @@ public class MenuActivity extends AppCompatActivity
 
         textUsuario = (TextView)view.findViewById(R.id.textUsuario);
 
-        Bundle bundle = this.getIntent().getExtras();
-        if (bundle != null) {
-                Nameusuario = bundle.getString("NameUsuario");
-                textUsuario.setText(Nameusuario);
-        }
+//        Bundle bundle = this.getIntent().getExtras();
+//        if (bundle != null) {
+//                Nameusuario = bundle.getString("NameUsuario");
+//                textUsuario.setText(Nameusuario);
+//        }
     }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        outState = this.getIntent().getExtras();
+        String dato = outState.getString("NameUsuario");
+
+         outState.putString("NameUser", dato);
+        outState.putString("Name_Usuario", dato);
+
+        Toast.makeText(this, "Usuario " + dato , Toast.LENGTH_SHORT).show();
+
+        // call superclass to save any view hierarchy
+        super.onSaveInstanceState(outState);
+    }
+
+    //@Override
+    //public void onRestoreInstanceState(Bundle savedInstanceState) {
+        //super.onRestoreInstanceState(savedInstanceState);
+        //savedInstanceState = this.getIntent().getExtras();
+
+        //savedInstanceState.getString("NameUsuario");
+
+        //Nameusuario = savedInstanceState.getString("NameUsuario");
+        //textUsuario.setText(savedInstanceState.getString("Name_Usuario"));
+        //Toast.makeText(this, "Usuario " + dato, Toast.LENGTH_SHORT).show();
+    //}
 
     @Override
     public void onBackPressed() {
