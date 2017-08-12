@@ -21,7 +21,7 @@
         android:layout_marginTop="0dp"
         android:layout_marginBottom="8dp"
         app:layout_constraintBottom_toTopOf="@+id/btn_viaje_curso"
-        app:layout_constraintVertical_bias="0.0"></com.google.android.gms.maps.MapView>
+        app:layout_constraintVertical_bias="1.0"></com.google.android.gms.maps.MapView>
 
     <Button
         android:id="@+id/btn_viaje_curso"
