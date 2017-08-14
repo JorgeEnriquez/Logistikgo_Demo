@@ -1,5 +1,6 @@
 package com.example.logistik.logistikgodemo;
 
+import android.content.Intent;
 import android.support.design.widget.TabLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -18,6 +19,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class ViajeCursoActivity extends AppCompatActivity {
 
@@ -36,9 +38,12 @@ public class ViajeCursoActivity extends AppCompatActivity {
      */
     private ViewPager mViewPager;
 
+    String Nameusuario;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_viaje_curso);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -70,8 +75,9 @@ public class ViajeCursoActivity extends AppCompatActivity {
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
+        if (id == R.id.action_acercade) {
+            Intent intent = new Intent(ViajeCursoActivity.this, AcercadeActivity.class);
+            startActivity(intent);
         }
 
         return super.onOptionsItemSelected(item);

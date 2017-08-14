@@ -1,5 +1,6 @@
 package com.example.logistik.logistikgodemo;
 
+import android.content.ClipData;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -27,12 +28,6 @@ public class MenuActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        // recovering the instance state
-//        if (savedInstanceState != null) {
-//            Nameusuario = savedInstanceState.getString("NameUsuario");
-//            Toast.makeText(this, "Usuario " + Nameusuario, Toast.LENGTH_SHORT).show();
-//        }
-
         setContentView(R.layout.activity_menu);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -48,40 +43,34 @@ public class MenuActivity extends AppCompatActivity
 
         view = navigationView.getHeaderView(0);
 
-        textUsuario = (TextView)view.findViewById(R.id.textUsuario);
+        textUsuario = (TextView) view.findViewById(R.id.textUsuario);
+        Bundle bundle = this.getIntent().getExtras();
+        if (bundle != null) {
+                Nameusuario = bundle.getString("NameUsuario");
+                textUsuario.setText(Nameusuario);
+        }
+    }
 
-//        Bundle bundle = this.getIntent().getExtras();
-//        if (bundle != null) {
-//                Nameusuario = bundle.getString("NameUsuario");
-//                textUsuario.setText(Nameusuario);
-//        }
+    @Override
+    public void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        textUsuario.setText(savedInstanceState.getString("Name_Usuario"));
+        Nameusuario = savedInstanceState.getString("NameUser");
+        Toast.makeText(this, "Usuario " + Nameusuario, Toast.LENGTH_SHORT).show();
     }
 
     @Override
     public void onSaveInstanceState(Bundle outState) {
-        outState = this.getIntent().getExtras();
-        String dato = outState.getString("NameUsuario");
+        super.onSaveInstanceState(outState);
 
-         outState.putString("NameUser", dato);
-        outState.putString("Name_Usuario", dato);
+        outState.putString("NameUser", Nameusuario);
+        outState.putString("Name_Usuario", textUsuario.getText().toString());
 
-        Toast.makeText(this, "Usuario " + dato , Toast.LENGTH_SHORT).show();
+        //Toast.makeText(this, "Usuario " + outState.getString("Name_Usuario"), Toast.LENGTH_SHORT).show();
 
         // call superclass to save any view hierarchy
         super.onSaveInstanceState(outState);
     }
-
-    //@Override
-    //public void onRestoreInstanceState(Bundle savedInstanceState) {
-        //super.onRestoreInstanceState(savedInstanceState);
-        //savedInstanceState = this.getIntent().getExtras();
-
-        //savedInstanceState.getString("NameUsuario");
-
-        //Nameusuario = savedInstanceState.getString("NameUsuario");
-        //textUsuario.setText(savedInstanceState.getString("Name_Usuario"));
-        //Toast.makeText(this, "Usuario " + dato, Toast.LENGTH_SHORT).show();
-    //}
 
     @Override
     public void onBackPressed() {
@@ -108,8 +97,9 @@ public class MenuActivity extends AppCompatActivity
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
+        if (id == R.id.action_acercade) {
+            Intent intent = new Intent(MenuActivity.this, AcercadeActivity.class);
+            startActivity(intent);
         }
 
         return super.onOptionsItemSelected(item);
@@ -131,10 +121,10 @@ public class MenuActivity extends AppCompatActivity
         } else if (id == R.id.nav_ajustes) {
 
         } else if (id == R.id.nav_acercade) {
-
+            intent = new Intent(MenuActivity.this, AcercadeActivity.class);
         }
 
-        if (intent != null){
+        if (intent != null) {
             startActivity(intent);
         }
 
