@@ -23,6 +23,8 @@ public class MenuActivity extends AppCompatActivity
     TextView textUsuario;
     View view;
     String Nameusuario;
+    String IDViajeProceso;
+    String StatusProceso;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +50,8 @@ public class MenuActivity extends AppCompatActivity
         if (bundle != null) {
                 Nameusuario = bundle.getString("NameUsuario");
                 textUsuario.setText(Nameusuario);
+            IDViajeProceso = bundle.getString("IDViajeProceso");
+            StatusProceso = bundle.getString("StatusProceso");
         }
     }
 
@@ -116,6 +120,8 @@ public class MenuActivity extends AppCompatActivity
             // Handle the camera action
         } else if (id == R.id.nav_viajecurso) {
             intent = new Intent(MenuActivity.this, ViajeCursoActivity.class);
+            intent.putExtra("IDViajeProceso",IDViajeProceso);
+            intent.putExtra("StatusProceso",StatusProceso);
         } else if (id == R.id.nav_evidencias) {
             intent = new Intent(MenuActivity.this, Activity_seguimientoViaje.class);
         } else if (id == R.id.nav_ajustes) {

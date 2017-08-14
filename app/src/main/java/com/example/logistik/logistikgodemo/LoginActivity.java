@@ -76,8 +76,8 @@ public class LoginActivity extends AppCompatActivity {
 //            tvIsConnected.setText("You are connected");
 
         //REALIZA LA PETICION
-        JSONObject jstrResult = GetResponse(jdata,jParams);
-        String NombreUsuario = jstrResult.getString("NombreUsuario");
+        JSONObject jResult = GetResponse(jdata,jParams);
+        String NombreUsuario = jResult.getString("NombreUsuario");
 
         if (NombreUsuario != ""){
 
@@ -87,15 +87,16 @@ public class LoginActivity extends AppCompatActivity {
             Context currentContext = this;
             Intent activity_login = new Intent(currentContext, MenuActivity.class);
             activity_login.putExtra("NameUsuario",NombreUsuario);
+            activity_login.putExtra("IDViajeProceso",jResult.getString("IDViajeProceso"));
+            activity_login.putExtra("StatusProceso",jResult.getString("StatusProceso"));
 
+//            Intent InformacionTab = new Intent(currentContext, ViajeCursoActivity.class);
+//            InformacionTab.putExtra("IDViajeProceso",jstrResult.getString("IDViajeProceso"));
+//            InformacionTab.putExtra("StatusProceso",jstrResult.getString("StatusProceso"));
+//            startActivity(InformacionTab);
 
-            Intent InformacionTab = new Intent(currentContext, ViajeCursoActivity.class);
-            InformacionTab.putExtra("IDViajeProceso",jstrResult.getString("IDViajeProceso"));
-            InformacionTab.putExtra("StatusProceso",jstrResult.getString("StatusProceso"));
-            startActivity(InformacionTab);
-            finish();
             startActivity(activity_login);
-
+            finish();
 
         }
         else{

@@ -6,10 +6,15 @@ import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
+import android.os.AsyncTask;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
+import android.util.JsonReader;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,6 +35,18 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.util.concurrent.ExecutionException;
+
 public class ViajeCursoTab extends Fragment implements OnMapReadyCallback {
     Button button;
     GoogleMap mMap;
@@ -39,12 +56,12 @@ public class ViajeCursoTab extends Fragment implements OnMapReadyCallback {
     double lat = 0.0;
     double lng = 0.0;
     double latitud = 0.0;
+    String strIDViaje;
+    String StatusProceso;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-
     }
 
     @Override
@@ -52,25 +69,46 @@ public class ViajeCursoTab extends Fragment implements OnMapReadyCallback {
                              Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_viaje_curso, container, false);
 
-        TextView textstaus = (TextView) view.findViewById(R.id.textstatusproceso);
-
         Bundle bundle = getActivity().getIntent().getExtras();
-        if (bundle != null)
-            textstaus.setText(bundle.getString("StatusProceso"));
-
         button = (Button) view.findViewById(R.id.btn_viaje_curso);
-        button.setText("Llegada Origen");
-
+        if (bundle != null) {
+            button.setText(bundle.getString("StatusProceso"));
+        }
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (button.getText() == "Llegada Origen") {
-                    button.setText("Descarga");
-                } else {
-                    button.setText("Llegada Origen");
+                try {
+                    setStatus(view);
+                } catch (ExecutionException e) {
+                    e.printStackTrace();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                } catch (JSONException e) {
+                    e.printStackTrace();
                 }
             }
         });
+//        if (bundle != null)
+//            textstaus.setText(bundle.getString("StatusProceso"));
+
+
+//        button = (Button) view.findViewById(R.id.btn_viaje_curso);
+//        button.setText("Llegada Origen");
+//
+//        button.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                if (button.getText() == "Llegada Origen") {
+//                    button.setText("CARGA");
+//                }
+//                else if (button.getText() == "CARGA"){
+//                    button.setText("RUTA");
+//                }
+//                else if (button.getText() == "RUTA"){
+//                    button.setText("DECARGA");
+//                }
+//            }
+//        });
         mapView  = (MapView) view.findViewById(R.id.map);
         mapView.onCreate(savedInstanceState);
         mapView.onResume();
@@ -146,6 +184,177 @@ public class ViajeCursoTab extends Fragment implements OnMapReadyCallback {
         locationManager.requestLocationUpdates(locationManager.GPS_PROVIDER, 1000, 0, locationListener);
     }
 
+    // TODO: begin API
+    public void setStatus(View view) throws ExecutionException, InterruptedException, JSONException {
 
+        //API PRODUCCION
+        String strURL = "https://api-debug.logistikgo.com/api/Viaje/Bro_SetStatus";
+        strIDViaje = "380";
+        JSONObject jdata = new JSONObject();
+        JSONObject jParams = new JSONObject();
+
+        try {
+            jdata.put("strURL", strURL);
+
+            jParams.put("strIDViaje", strIDViaje);
+            jParams.put("lat", lat);
+            jParams.put("lng", lng);
+            jParams.put("StatusProceso", StatusProceso);
+
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        //REALIZA LA PETICIO
+        JSONObject jResult = GetResponse(jdata, jParams);
+
+        String StatusSiguiente = jResult.getString("StatusProceso");
+        button.setText(StatusSiguiente);
+
+
+//        }
+    }
+
+    public JSONObject GetResponse(JSONObject jdata, JSONObject jParams) throws ExecutionException, InterruptedException, JSONException {
+        JSONObject resJson = null;
+
+        //Instantiate new instance of our class
+        LoginActivity.HttpGetRequest getRequest = new LoginActivity.HttpGetRequest();
+
+        resJson = getRequest.execute(jdata, jParams).get();
+
+        return resJson;
+    }
+
+    public static JSONObject GetHttpResponse(String strURL, JSONObject jData, String strRequest_method, int read_timeout, int connection_timeout) {
+
+        String inputLine;
+        JSONObject jRes = null;
+
+
+        try {
+            URL urlCurrent = new URL(strURL);
+            HttpURLConnection connection = (HttpURLConnection) urlCurrent.openConnection();
+
+            connection.setRequestMethod(strRequest_method);
+            connection.setReadTimeout(read_timeout);
+            connection.setConnectTimeout(connection_timeout);
+
+            //POST
+            connection.setDoOutput(true);
+            connection.setDoInput(true);
+
+            //ENCABEZADOS DE LA PETICIÓN
+            connection.setRequestProperty("Content-Type", "application/json; charset=utf-8");
+
+            //Connect to our url
+            connection.connect();
+
+            OutputStream os = connection.getOutputStream();
+            os.write(jData.toString().getBytes("UTF-8"));
+            os.close();
+
+            int HttpResult = connection.getResponseCode();
+
+            //VERIFICAR SI LA CONEXION SE REALIZO DE FORMA CORRECTA = 200
+            if (HttpResult == HttpURLConnection.HTTP_OK) {
+
+                InputStreamReader streamReader = new InputStreamReader(connection.getInputStream());
+
+                StringBuilder stringBuilder = new StringBuilder();
+
+                //LEER JSON MANUAL
+
+                BufferedReader reader = new BufferedReader(streamReader);
+
+                while ((inputLine = reader.readLine()) != null) {
+                    stringBuilder.append(inputLine);
+                }
+
+                reader.close();
+                streamReader.close();
+                //Set our result equal to our stringBuilder
+                String _strRes = stringBuilder.toString();
+                JSONObject obj = new JSONObject(_strRes);
+                JSONObject paramMeta = obj.getJSONObject("jMeta");
+
+                String strResponse = paramMeta.getString("Response");
+
+                if (strResponse.equals("OK")) {
+                    jRes = obj.getJSONObject("jData");
+                } else {
+                    jRes = obj.getJSONObject("jDataError");
+                }
+            } else {
+                String strResponse = connection.getResponseMessage();
+                InputStreamReader streamError = new InputStreamReader(connection.getErrorStream());
+                JsonReader jsonReader = new JsonReader(streamError);
+
+                //LEER JSON
+                jsonReader.beginObject(); // Start processing the JSON object
+                while (jsonReader.hasNext()) { // Loop through all keys
+                    String key = jsonReader.nextName(); // Fetch the next key
+                    if (key.equals("Message")) { // VERIFICA EL NOMBRE DEL CAMPO
+                        //   strRes = jsonReader.nextString();
+                        break; // Break out of the loop
+                    } else {
+                        jsonReader.skipValue(); // Skip values of other keys
+                    }
+                }
+                jsonReader.close();
+
+                Log.d("ERROR", strResponse);
+            }
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        return jRes;
+    }
+
+    //CLASS ASYNC REQUEST
+    public static class HttpGetRequest extends AsyncTask<JSONObject, Void, JSONObject> {
+
+        //VARIABLES DE CONFIGURACION DE LA CONEXION
+        public static final String REQUEST_METHOD = "POST";
+        public static final int READ_TIMEOUT = 150000;
+        public static final int CONNECTION_TIMEOUT = 150000;
+
+        @Override
+        protected void onPreExecute() {
+        }
+
+
+        @Override
+        protected JSONObject doInBackground(JSONObject... jObject) {
+            String stringUrl = null;
+            JSONObject resJson = null;
+
+            try {
+                stringUrl = jObject[0].getString("strURL");
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+            String result = null;
+            String inputLine;
+
+            try {
+
+                resJson = GetHttpResponse(stringUrl, jObject[1], REQUEST_METHOD, READ_TIMEOUT, CONNECTION_TIMEOUT);
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            return resJson;
+        }
+
+    }
 
 }
