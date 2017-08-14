@@ -70,8 +70,6 @@ public class MenuActivity extends AppCompatActivity
         outState.putString("NameUser", Nameusuario);
         outState.putString("Name_Usuario", textUsuario.getText().toString());
 
-        //Toast.makeText(this, "Usuario " + outState.getString("Name_Usuario"), Toast.LENGTH_SHORT).show();
-
         // call superclass to save any view hierarchy
         super.onSaveInstanceState(outState);
     }
