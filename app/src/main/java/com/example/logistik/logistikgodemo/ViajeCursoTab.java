@@ -2,6 +2,7 @@ package com.example.logistik.logistikgodemo;
 
 import android.Manifest;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationListener;
@@ -54,9 +55,9 @@ public class ViajeCursoTab extends Fragment implements OnMapReadyCallback {
     View view;
     private Marker marcador;
     double lat = 0.0;
-    double lng = 0.0;
-    double latitud = 0.0;
-    String strIDViaje;
+    double coordLng = 0.0;
+    double coordLat = 0.0;
+    String strDBro_Viaje;
     String StatusProceso;
 
     @Override
@@ -70,9 +71,11 @@ public class ViajeCursoTab extends Fragment implements OnMapReadyCallback {
         view = inflater.inflate(R.layout.fragment_viaje_curso, container, false);
 
         Bundle bundle = getActivity().getIntent().getExtras();
+        StatusProceso = bundle.getString("StatusProceso");
+        strDBro_Viaje = bundle.getString("IDViajeProceso");
         button = (Button) view.findViewById(R.id.btn_viaje_curso);
         if (bundle != null) {
-            button.setText(bundle.getString("StatusProceso"));
+            button.setText(StatusProceso);
         }
         button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -143,10 +146,10 @@ public class ViajeCursoTab extends Fragment implements OnMapReadyCallback {
 
     private void actualizarUbicacion(Location location) {
         if (location != null) {
-            lat = location.getLatitude();
-            lng = location.getLongitude();
-            latitud = location.getLatitude();
-            agregarMarcador(lat, lng);
+          //  lat = location.getLatitude();
+            coordLng = location.getLongitude();
+            coordLat = location.getLatitude();
+            agregarMarcador(coordLat, coordLng);
         }
     }
 
@@ -187,19 +190,18 @@ public class ViajeCursoTab extends Fragment implements OnMapReadyCallback {
     // TODO: begin API
     public void setStatus(View view) throws ExecutionException, InterruptedException, JSONException {
 
-        //API PRODUCCION
+        //API debug
         String strURL = "https://api-debug.logistikgo.com/api/Viaje/Bro_SetStatus";
-        strIDViaje = "380";
+        //strIDViaje = "380";
         JSONObject jdata = new JSONObject();
         JSONObject jParams = new JSONObject();
 
         try {
             jdata.put("strURL", strURL);
 
-            jParams.put("strIDViaje", strIDViaje);
-            jParams.put("lat", lat);
-            jParams.put("lng", lng);
-            jParams.put("StatusProceso", StatusProceso);
+            jParams.put("strDBro_Viaje", strDBro_Viaje);
+            jParams.put("coordLat", coordLat);
+            jParams.put("coordLng", coordLng);
 
 
         } catch (JSONException e) {
@@ -210,8 +212,15 @@ public class ViajeCursoTab extends Fragment implements OnMapReadyCallback {
         JSONObject jResult = GetResponse(jdata, jParams);
 
         String StatusSiguiente = jResult.getString("StatusProceso");
-        button.setText(StatusSiguiente);
-
+        if (StatusSiguiente != "FINALIZADO")
+        {
+            button.setText(StatusSiguiente);
+        }
+        else
+            {
+              Intent intent = new Intent(getActivity(), MenuActivity.class);
+                startActivity(intent);
+        }
 
 //        }
     }

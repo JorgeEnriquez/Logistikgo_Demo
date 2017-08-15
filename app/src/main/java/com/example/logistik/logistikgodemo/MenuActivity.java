@@ -120,6 +120,8 @@ public class MenuActivity extends AppCompatActivity
             intent = new Intent(MenuActivity.this, ViajeCursoActivity.class);
             intent.putExtra("IDViajeProceso",IDViajeProceso);
             intent.putExtra("StatusProceso",StatusProceso);
+
+
         } else if (id == R.id.nav_evidencias) {
             intent = new Intent(MenuActivity.this, Activity_seguimientoViaje.class);
         } else if (id == R.id.nav_ajustes) {
