@@ -51,6 +51,8 @@ public class InformacionTab extends Fragment {
         textViewCantidad = (TextView) view.findViewById(R.id.textCantidad);
         textViewPeso = (TextView) view.findViewById(R.id.textCdDestino);
         textViewVolumen = (TextView) view.findViewById(R.id.textVolumen);
+        Bundle bundle = getActivity().getIntent().getExtras();
+        strIDViaje = bundle.getString("IDViajeProceso");
 
         try {
             datosg(view);
@@ -89,7 +91,7 @@ public class InformacionTab extends Fragment {
 
         //API PRODUCCION
         String strURL = "https://api-test.logistikgo.com/api/Viaje/GetDatosViaje";
-        strIDViaje = "130";
+        //strIDViaje = "130";
         JSONObject jdata = new JSONObject();
         JSONObject jParams = new JSONObject();
 
