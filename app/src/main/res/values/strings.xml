@@ -38,6 +38,7 @@
     <string name="button_llegadadestino">LLEGADADESTINO</string>
     <string name="button_descarga">DESCARGA</string>
 
+    <string name="folio_data">Folio</string>
     <string name="data_data">Datos</string>
     <string name="origin_data">Origen</string>
     <string name="destination_data">Destino</string>

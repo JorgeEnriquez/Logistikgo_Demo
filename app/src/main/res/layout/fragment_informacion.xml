@@ -20,6 +20,32 @@
             android:layout_height="wrap_content"
             android:orientation="vertical" >
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:weightSum="1">
+
+                <TextView
+                    android:layout_width="115dp"
+                    android:layout_height="wrap_content"
+                    android:padding="3dp"
+                    android:textSize="16dp"
+                    android:gravity="center"
+                    android:textStyle="bold"
+                    android:textColor="#fff"
+                    android:background="@drawable/boton_login"
+                    android:text="@string/folio_data"
+                    android:layout_weight="0.1" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="20dp"
+                android:orientation="horizontal"></LinearLayout>
+
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -59,8 +85,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:fontFamily=""
-                        android:layout_weight="1"
-                        android:text="Niagara Botting, LLC" />
+                        android:layout_weight="1"/>
 
                 </LinearLayout>
 
@@ -79,8 +104,7 @@
                     <TextView
                         android:id="@+id/textCteDestino"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="Nueva Wal-Mart de México, S. de R.L. de C.V." />
+                        android:layout_height="wrap_content"/>
 
                 </LinearLayout>
 
@@ -102,8 +126,7 @@
                         android:id="@+id/textCdOrigen"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginRight="4dp"
-                        android:text="Salinas Victoria, Nuevo Leon" />
+                        android:layout_marginRight="4dp"/>
                 </LinearLayout>
 
                 <LinearLayout
@@ -115,8 +138,7 @@
                     <TextView
                         android:id="@+id/textCdDestino"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="Villa Hermosa, Tabasco" />
+                        android:layout_height="wrap_content"/>
                 </LinearLayout>
             </LinearLayout>
 
@@ -158,8 +180,7 @@
                     <TextView
                         android:id="@+id/textEmbalaje"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="Tarima" />
+                        android:layout_height="wrap_content"/>
 
                 </LinearLayout>
 
@@ -179,8 +200,7 @@
                     <TextView
                         android:id="@+id/textClasificacion"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="Alimenticio" />
+                        android:layout_height="wrap_content"/>
 
                 </LinearLayout>
 
@@ -199,8 +219,7 @@
                     <TextView
                         android:id="@+id/textDescripcion"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="Agua" />
+                        android:layout_height="wrap_content"/>
 
                 </LinearLayout>
             </LinearLayout>
@@ -228,8 +247,7 @@
                         android:id="@+id/textCantidad"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="24" />
+                        android:layout_weight="1"/>
                 </LinearLayout>
 
                 <LinearLayout
@@ -248,8 +266,7 @@
                     <TextView
                         android:id="@+id/textPeso"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="28 Toneladas" />
+                        android:layout_height="wrap_content"/>
                 </LinearLayout>
 
                 <LinearLayout
@@ -267,8 +284,7 @@
                     <TextView
                         android:id="@+id/textVolumen"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="0 m3" />
+                        android:layout_height="wrap_content"/>
                 </LinearLayout>
             </LinearLayout>
         </LinearLayout>
