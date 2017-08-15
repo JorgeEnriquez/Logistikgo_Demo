@@ -20,6 +20,7 @@ import android.view.ViewGroup;
 
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.Button;
 
 public class ViajeCursoActivity extends AppCompatActivity {
 
@@ -38,7 +39,7 @@ public class ViajeCursoActivity extends AppCompatActivity {
      */
     private ViewPager mViewPager;
 
-    String Nameusuario;
+    Button buttonBack;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

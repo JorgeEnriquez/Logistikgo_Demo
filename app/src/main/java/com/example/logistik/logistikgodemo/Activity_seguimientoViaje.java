@@ -52,7 +52,7 @@ public class Activity_seguimientoViaje extends FragmentActivity implements OnMap
         LatLng coordenadas = new LatLng(lat, lng);
         CameraUpdate miubicacion = CameraUpdateFactory.newLatLngZoom(coordenadas, 16);
         if (marcador != null) marcador.remove();
-        marcador = mMap.addMarker(new MarkerOptions().position(coordenadas).title("Mi ubicacion").icon(BitmapDescriptorFactory.fromResource(R.mipmap.trailer2)).flat(true).rotation(4));
+        marcador = mMap.addMarker(new MarkerOptions().position(coordenadas).title("Mi ubicacion").icon(BitmapDescriptorFactory.fromResource(R.mipmap.ic_trailer_map)).flat(true).rotation(4));
         mMap.animateCamera(miubicacion);
     }
 
