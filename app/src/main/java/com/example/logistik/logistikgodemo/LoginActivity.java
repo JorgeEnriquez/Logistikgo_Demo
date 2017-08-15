@@ -33,7 +33,8 @@ public class LoginActivity extends AppCompatActivity {
     EditText editContrasena;
     String strUsuario;
     String strContrasena;
-//    public void onMenuClick(View view){
+
+    //    public void onMenuClick(View view){
 //        Context currentContext = this;
 //        Intent activity_login = new Intent(currentContext, MenuActivity.class);
 //        startActivity(activity_login);
@@ -46,79 +47,82 @@ public class LoginActivity extends AppCompatActivity {
 
         editUsuario = (EditText) findViewById(R.id.editUsuario);
         editContrasena = (EditText) findViewById(R.id.editContrasena);
-
     }
 
     public void onMenuClick(View view) throws ExecutionException, InterruptedException, JSONException {
 
-        //API PRODUCCION
-        String strURL = "https://api-debug.logistikgo.com/api/Usuarios/ValidarUsuario";
-        //API DEBUG VISUAL STUDIO
-//        String strURL = "http://10.0.2.2:63510/api/Usuarios/ValidarUsuario";
-        strUsuario =  editUsuario.getText().toString();
+        strUsuario = editUsuario.getText().toString();
         strContrasena = editContrasena.getText().toString();
 
-        JSONObject jdata=new JSONObject();
-        JSONObject jParams=new JSONObject();
+        if (strUsuario.isEmpty() || strContrasena.isEmpty()) {
+            editUsuario.setError("Campo requerido");
+        } else {
 
-        try {
-            jdata.put("strURL",strURL);
 
-            jParams.put("strUsuario",strUsuario);
-            jParams.put("strContrasena",strContrasena);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
+            //API PRODUCCION
+            String strURL = "https://api-debug.logistikgo.com/api/Usuarios/ValidarUsuario";
+            //API DEBUG VISUAL STUDIO
+//        String strURL = "http://10.0.2.2:63510/api/Usuarios/ValidarUsuario";
 
-        //VERIFICA SI HAY CONEXIÓN DE INTERNET
+
+            JSONObject jdata = new JSONObject();
+            JSONObject jParams = new JSONObject();
+
+            try {
+                jdata.put("strURL", strURL);
+
+                jParams.put("strUsuario", strUsuario);
+                jParams.put("strContrasena", strContrasena);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+            //VERIFICA SI HAY CONEXIÓN DE INTERNET
 //        if(isConnected()){
 //            tvIsConnected.setBackgroundColor(0xFF00CC00);
 //            tvIsConnected.setText("You are connected");
 
-        //REALIZA LA PETICION
-        JSONObject jResult = GetResponse(jdata,jParams);
-        String NombreUsuario = jResult.getString("NombreUsuario");
+            //REALIZA LA PETICION
+            JSONObject jResult = GetResponse(jdata, jParams);
+            String NombreUsuario = jResult.getString("NombreUsuario");
 
-        if (NombreUsuario != ""){
+            if (NombreUsuario != "") {
 
 
-            Toast.makeText(this, "Bienvenido " + NombreUsuario , Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Bienvenido " + NombreUsuario, Toast.LENGTH_SHORT).show();
 
-            Context currentContext = this;
-            Intent activity_login = new Intent(currentContext, MenuActivity.class);
-            activity_login.putExtra("NameUsuario",NombreUsuario);
-            activity_login.putExtra("IDViajeProceso",jResult.getString("IDViajeProceso"));
-            activity_login.putExtra("StatusProceso",jResult.getString("StatusProceso"));
+                Context currentContext = this;
+                Intent activity_login = new Intent(currentContext, MenuActivity.class);
+                activity_login.putExtra("NameUsuario", NombreUsuario);
+                activity_login.putExtra("IDViajeProceso", jResult.getString("IDViajeProceso"));
+                activity_login.putExtra("StatusProceso", jResult.getString("StatusProceso"));
 
 //            Intent InformacionTab = new Intent(currentContext, ViajeCursoActivity.class);
 //            InformacionTab.putExtra("IDViajeProceso",jstrResult.getString("IDViajeProceso"));
 //            InformacionTab.putExtra("StatusProceso",jstrResult.getString("StatusProceso"));
 //            startActivity(InformacionTab);
 
-            startActivity(activity_login);
-            finish();
+                startActivity(activity_login);
+                finish();
 
+            } else {
+                Toast.makeText(this, "Usuario incorrecto", Toast.LENGTH_SHORT).show();
+            }
         }
-        else{
-            Toast.makeText(this, "Usuario incorrecto" , Toast.LENGTH_SHORT).show();
-        }
-
-
-
-//        }
     }
-    public JSONObject GetResponse(JSONObject jdata,JSONObject jParams) throws ExecutionException, InterruptedException, JSONException {
+
+    public JSONObject GetResponse(JSONObject jdata, JSONObject jParams) throws ExecutionException, InterruptedException, JSONException {
         JSONObject resJson = null;
 
         //Instantiate new instance of our class
         HttpGetRequest getRequest = new HttpGetRequest();
 
-        resJson = getRequest.execute(jdata,jParams).get();
+        resJson = getRequest.execute(jdata, jParams).get();
 
         return resJson;
     }
 
-    public static JSONObject GetHttpResponse(String strURL, JSONObject jData, String strRequest_method, int read_timeout, int connection_timeout)  {
+    public static JSONObject GetHttpResponse(String strURL, JSONObject jData, String strRequest_method, int read_timeout, int connection_timeout) {
         String strRes = null;
         String inputLine;
         JSONObject jRes = null;
@@ -128,7 +132,7 @@ public class LoginActivity extends AppCompatActivity {
 
         try {
             URL urlCurrent = new URL(strURL);
-            HttpURLConnection connection =(HttpURLConnection)urlCurrent.openConnection();
+            HttpURLConnection connection = (HttpURLConnection) urlCurrent.openConnection();
 
             connection.setRequestMethod(strRequest_method);
             connection.setReadTimeout(read_timeout);
@@ -151,7 +155,7 @@ public class LoginActivity extends AppCompatActivity {
             int HttpResult = connection.getResponseCode();
 
             //VERIFICAR SI LA CONEXION SE REALIZO DE FORMA CORRECTA = 200
-            if(HttpResult == HttpURLConnection.HTTP_OK){
+            if (HttpResult == HttpURLConnection.HTTP_OK) {
 
                 InputStreamReader streamReader = new InputStreamReader(connection.getInputStream());
 
@@ -164,7 +168,7 @@ public class LoginActivity extends AppCompatActivity {
                 BufferedReader reader = new BufferedReader(streamReader);
                 StringBuilder _stringBuilder = new StringBuilder();
                 //Check if the line we are reading is not null
-                while((inputLine = reader.readLine()) != null){
+                while ((inputLine = reader.readLine()) != null) {
                     stringBuilder.append(inputLine);
                 }
                 //Close our InputStream and Buffered reader
@@ -178,14 +182,12 @@ public class LoginActivity extends AppCompatActivity {
 
                 String strResponse = paramMeta.getString("Response");
 
-                if(strResponse.equals("OK")){
+                if (strResponse.equals("OK")) {
                     jRes = obj.getJSONObject("jData");
-                }
-                else{
+                } else {
                     jRes = obj.getJSONObject("jDataError");
                 }
-            }
-            else{
+            } else {
                 String strResponse = connection.getResponseMessage();
                 InputStreamReader streamError = new InputStreamReader(connection.getErrorStream());
                 JsonReader jsonReader = new JsonReader(streamError);
@@ -203,7 +205,7 @@ public class LoginActivity extends AppCompatActivity {
                 }
                 jsonReader.close();
 
-                Log.d("ERROR",strResponse);
+                Log.d("ERROR", strResponse);
             }
         } catch (MalformedURLException e) {
             e.printStackTrace();
@@ -217,7 +219,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     // VERIFICAR SI EXISTE CONEXIÓN A INTERNET
-    public boolean isConnected(){
+    public boolean isConnected() {
         ConnectivityManager connMgr = (ConnectivityManager) getSystemService(this.CONNECTIVITY_SERVICE);
         NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
 
@@ -253,7 +255,7 @@ public class LoginActivity extends AppCompatActivity {
 
             try {
 
-                resJson = GetHttpResponse(stringUrl,jObject[1],REQUEST_METHOD,READ_TIMEOUT,CONNECTION_TIMEOUT);
+                resJson = GetHttpResponse(stringUrl, jObject[1], REQUEST_METHOD, READ_TIMEOUT, CONNECTION_TIMEOUT);
 
             } catch (Exception e) {
                 e.printStackTrace();
