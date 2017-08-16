@@ -107,7 +107,7 @@ public class LoginActivity extends AppCompatActivity {
 
         String inputLine;
         JSONObject jRes = null;
-
+//
         try {
             URL urlCurrent = new URL(strURL);
             HttpURLConnection connection = (HttpURLConnection) urlCurrent.openConnection();
