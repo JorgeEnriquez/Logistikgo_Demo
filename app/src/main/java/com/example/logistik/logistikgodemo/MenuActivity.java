@@ -46,14 +46,14 @@ public class MenuActivity extends AppCompatActivity
         view = navigationView.getHeaderView(0);
 
         textUsuario = (TextView) view.findViewById(R.id.textUsuario);
-        Bundle bundle = this.getIntent().getExtras();
+    Bundle bundle = this.getIntent().getExtras();
         if (bundle != null) {
-                Nameusuario = bundle.getString("NameUsuario");
-                textUsuario.setText(Nameusuario);
-            IDViajeProceso = bundle.getString("IDViajeProceso");
-            StatusProceso = bundle.getString("StatusProceso");
-        }
+        Nameusuario = bundle.getString("NameUsuario");
+        textUsuario.setText(Nameusuario);
+        IDViajeProceso = bundle.getString("IDViajeProceso");
+        StatusProceso = bundle.getString("StatusProceso");
     }
+}
 
     @Override
     public void onRestoreInstanceState(Bundle savedInstanceState) {
