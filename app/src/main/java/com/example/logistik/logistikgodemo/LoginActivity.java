@@ -34,12 +34,6 @@ public class LoginActivity extends AppCompatActivity {
     String strUsuario;
     String strContrasena;
 
-    //    public void onMenuClick(View view){
-//        Context currentContext = this;
-//        Intent activity_login = new Intent(currentContext, MenuActivity.class);
-//        startActivity(activity_login);
-//        finish();
-//    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

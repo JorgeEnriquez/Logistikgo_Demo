@@ -1,7 +1,7 @@
 package com.example.logistik.logistikgodemo;
 
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
+        import android.support.v7.app.AppCompatActivity;
+        import android.os.Bundle;
 
 public class AcercadeActivity extends AppCompatActivity {
 
