@@ -55,37 +55,23 @@ public class LoginActivity extends AppCompatActivity {
         strContrasena = editContrasena.getText().toString();
 
         if (ValidateForm(new EditText[]{editUsuario, editContrasena})) {
-            //editUsuario.setError("Campo requerido");
-
-            //API PRODUCCION
+            //API DEBUG
             String strURL = "https://api-debug.logistikgo.com/api/Usuarios/ValidarUsuario";
             //API DEBUG VISUAL STUDIO
-//        String strURL = "http://10.0.2.2:63510/api/Usuarios/ValidarUsuario";
-
-
             JSONObject jdata = new JSONObject();
             JSONObject jParams = new JSONObject();
 
             try {
                 jdata.put("strURL", strURL);
-
                 jParams.put("strUsuario", strUsuario);
                 jParams.put("strContrasena", strContrasena);
             } catch (JSONException e) {
                 e.printStackTrace();
             }
 
-            //VERIFICA SI HAY CONEXIÓN DE INTERNET
-//        if(isConnected()){
-//            tvIsConnected.setBackgroundColor(0xFF00CC00);
-//            tvIsConnected.setText("You are connected");
-
             //REALIZA LA PETICION
             JSONObject jResult = GetResponse(jdata, jParams);
             String NombreUsuario = jResult.getString("NombreUsuario");
-
-            if (NombreUsuario != "") {
-
 
                 Toast.makeText(this, "Bienvenido " + NombreUsuario, Toast.LENGTH_SHORT).show();
 
@@ -95,20 +81,10 @@ public class LoginActivity extends AppCompatActivity {
                 activity_login.putExtra("IDViajeProceso", jResult.getString("IDViajeProceso"));
                 activity_login.putExtra("StatusProceso", jResult.getString("StatusProceso"));
 
-//            Intent InformacionTab = new Intent(currentContext, ViajeCursoActivity.class);
-//            InformacionTab.putExtra("IDViajeProceso",jstrResult.getString("IDViajeProceso"));
-//            InformacionTab.putExtra("StatusProceso",jstrResult.getString("StatusProceso"));
-//            startActivity(InformacionTab);
-
                 startActivity(activity_login);
                 finish();
-
-            } else {
-                Toast.makeText(this, "Usuario incorrecto", Toast.LENGTH_SHORT).show();
-            }
         }
     }
-
     public static boolean ValidateForm(EditText[] fields) {
         boolean bRes = true;
         for (int i = 0; i < fields.length; i++) {
@@ -134,12 +110,9 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public static JSONObject GetHttpResponse(String strURL, JSONObject jData, String strRequest_method, int read_timeout, int connection_timeout) {
-        String strRes = null;
+
         String inputLine;
         JSONObject jRes = null;
-        JSONObject _jMeta = null;
-        JSONObject _jData = null;
-        JSONObject _jError = null;
 
         try {
             URL urlCurrent = new URL(strURL);
@@ -171,13 +144,11 @@ public class LoginActivity extends AppCompatActivity {
                 InputStreamReader streamReader = new InputStreamReader(connection.getInputStream());
 
                 StringBuilder stringBuilder = new StringBuilder();
-                String strResponseMessage = connection.getResponseMessage();
-                JsonReader jsonReader = new JsonReader(streamReader);
 
                 //LEER JSON MANUAL
                 //Create a new buffered reader and String Builder
                 BufferedReader reader = new BufferedReader(streamReader);
-                StringBuilder _stringBuilder = new StringBuilder();
+
                 //Check if the line we are reading is not null
                 while ((inputLine = reader.readLine()) != null) {
                     stringBuilder.append(inputLine);
@@ -189,14 +160,11 @@ public class LoginActivity extends AppCompatActivity {
                 String _strRes = stringBuilder.toString();
                 JSONObject obj = new JSONObject(_strRes);
                 JSONObject paramMeta = obj.getJSONObject("jMeta");
-                String __strResponse = paramMeta.getString("ResponseCode");
 
                 String strResponse = paramMeta.getString("Response");
 
                 if (strResponse.equals("OK")) {
                     jRes = obj.getJSONObject("jData");
-                } else {
-                    jRes = obj.getJSONObject("jDataError");
                 }
             } else {
                 String strResponse = connection.getResponseMessage();
@@ -208,7 +176,7 @@ public class LoginActivity extends AppCompatActivity {
                 while (jsonReader.hasNext()) { // Loop through all keys
                     String key = jsonReader.nextName(); // Fetch the next key
                     if (key.equals("Message")) { // VERIFICA EL NOMBRE DEL CAMPO
-                        strRes = jsonReader.nextString();
+
                         break; // Break out of the loop
                     } else {
                         jsonReader.skipValue(); // Skip values of other keys
