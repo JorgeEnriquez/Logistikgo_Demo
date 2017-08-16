@@ -54,10 +54,8 @@ public class LoginActivity extends AppCompatActivity {
         strUsuario = editUsuario.getText().toString();
         strContrasena = editContrasena.getText().toString();
 
-        if (strUsuario.isEmpty() || strContrasena.isEmpty()) {
-            editUsuario.setError("Campo requerido");
-        } else {
-
+        if (ValidateForm(new EditText[]{editUsuario, editContrasena})) {
+            //editUsuario.setError("Campo requerido");
 
             //API PRODUCCION
             String strURL = "https://api-debug.logistikgo.com/api/Usuarios/ValidarUsuario";
@@ -109,6 +107,19 @@ public class LoginActivity extends AppCompatActivity {
                 Toast.makeText(this, "Usuario incorrecto", Toast.LENGTH_SHORT).show();
             }
         }
+    }
+
+    public static boolean ValidateForm(EditText[] fields) {
+        boolean bRes = true;
+        for (int i = 0; i < fields.length; i++) {
+            EditText currentField = fields[i];
+            if (currentField.getText().toString().isEmpty()) {
+                currentField.setError("Campo requerido");
+                bRes = false;
+                break;
+            }
+        }
+        return bRes;
     }
 
     public JSONObject GetResponse(JSONObject jdata, JSONObject jParams) throws ExecutionException, InterruptedException, JSONException {
