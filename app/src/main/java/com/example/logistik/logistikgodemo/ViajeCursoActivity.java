@@ -50,7 +50,7 @@ public class ViajeCursoActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle(R.string.title_activity_viaje_curso);
 
-        toolbar.setNavigationOnClickListener(new View.OnClickListener(){
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {//
                 finish();
@@ -101,13 +101,23 @@ public class ViajeCursoActivity extends AppCompatActivity {
 
         @Override
         public Fragment getItem(int position) {
-            switch (position){
+            switch (position) {
                 case 0:
-                    ViajeCursoTab viajeCursoTab = new ViajeCursoTab();
-                    return viajeCursoTab;
+                    if ("ViajeFinalizado" == "ViajeFinalizado") {
+                        ViajeFinalizadoFragment viajeFinalizadoViaje = new ViajeFinalizadoFragment();
+                        return viajeFinalizadoViaje;
+                    } else {
+                        ViajeCursoTab viajeCursoTab = new ViajeCursoTab();
+                        return viajeCursoTab;
+                    }
                 case 1:
-                    InformacionTab informacionTab = new InformacionTab();
-                    return informacionTab;
+                    if ("ViajeFinalizado" == "ViajeFinalizado") {
+                        ViajeFinalizadoFragment viajeFinalizadoInformacion = new ViajeFinalizadoFragment();
+                        return viajeFinalizadoInformacion;
+                    } else {
+                        InformacionTab informacionTab = new InformacionTab();
+                        return informacionTab;
+                    }
                 default:
                     return null;
             }

@@ -211,7 +211,6 @@ public class LoginActivity extends AppCompatActivity {
         protected void onPreExecute() {
         }
 
-
         @Override
         protected JSONObject doInBackground(JSONObject... jObject) {
             String stringUrl = null;
