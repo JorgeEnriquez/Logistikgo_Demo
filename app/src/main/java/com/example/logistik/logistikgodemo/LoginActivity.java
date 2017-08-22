@@ -1,10 +1,14 @@
 package com.example.logistik.logistikgodemo;
 
+
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
+import android.support.v7.app.ActionBarActivity;
+import android.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.JsonReader;
@@ -15,7 +19,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
-
+import android.app.Activity;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -33,6 +37,7 @@ public class LoginActivity extends AppCompatActivity {
     EditText editContrasena;
     String strUsuario;
     String strContrasena;
+    boolean bRes = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,10 +46,35 @@ public class LoginActivity extends AppCompatActivity {
 
         editUsuario = (EditText) findViewById(R.id.editUsuario);
         editContrasena = (EditText) findViewById(R.id.editContrasena);
+
+    }
+
+//    public void onBackPressed() {
+//        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+//        builder.setTitle("Importante");
+//        builder.setMessage("¿Estas seguro?");
+//        builder.setPositiveButton("Confirmar", new DialogInterface.OnClickListener() {
+//            @Override
+//            public void onClick(DialogInterface dialog , int which) {
+//                finish();
+//            }
+//        });
+//    }
+
+    public void onclickCambiarStatus(View view) {
+
+        AlertDialog.Builder message = new AlertDialog.Builder(this);
+        message.setTitle("Importante");
+        message.setMessage("¿Acepta lo sigiente?");
+        message.setCancelable(false);
+        message.setPositiveButton("Confirmar", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                dialog.cancel();
+            }
+        });
     }
 
     public void onMenuClick(View view) throws ExecutionException, InterruptedException, JSONException {
-
         strUsuario = editUsuario.getText().toString();
         strContrasena = editContrasena.getText().toString();
 
@@ -67,18 +97,19 @@ public class LoginActivity extends AppCompatActivity {
             JSONObject jResult = GetResponse(jdata, jParams);
             String NombreUsuario = jResult.getString("NombreUsuario");
 
-                Toast.makeText(this, "Bienvenido " + NombreUsuario, Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Bienvenido " + NombreUsuario, Toast.LENGTH_SHORT).show();
 
-                Context currentContext = this;
-                Intent activity_login = new Intent(currentContext, MenuActivity.class);
-                activity_login.putExtra("NameUsuario", NombreUsuario);
-                activity_login.putExtra("IDViajeProceso", jResult.getString("IDViajeProceso"));
-                activity_login.putExtra("StatusProceso", jResult.getString("StatusProceso"));
+            Context currentContext = this;
+            Intent activity_login = new Intent(currentContext, MenuActivity.class);
+            activity_login.putExtra("NameUsuario", NombreUsuario);
+            activity_login.putExtra("IDViajeProceso", jResult.getString("IDViajeProceso"));
+            activity_login.putExtra("StatusProceso", jResult.getString("StatusProceso"));
 
-                startActivity(activity_login);
-                finish();
+            startActivity(activity_login);
+            finish();
         }
     }
+
     public static boolean ValidateForm(EditText[] fields) {
         boolean bRes = true;
         for (int i = 0; i < fields.length; i++) {
