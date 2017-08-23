@@ -26,6 +26,7 @@ public class MenuActivity extends AppCompatActivity
     String IDViajeProceso;
     String StatusProceso;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,14 +47,14 @@ public class MenuActivity extends AppCompatActivity
         view = navigationView.getHeaderView(0);
 
         textUsuario = (TextView) view.findViewById(R.id.textUsuario);
-    Bundle bundle = this.getIntent().getExtras();
+        Bundle bundle = this.getIntent().getExtras();
         if (bundle != null) {
-        Nameusuario = bundle.getString("NameUsuario");
-        textUsuario.setText(Nameusuario);
-        IDViajeProceso = bundle.getString("IDViajeProceso");
-        StatusProceso = bundle.getString("StatusProceso");
+            Nameusuario = bundle.getString("NameUsuario");
+            textUsuario.setText(Nameusuario);
+            IDViajeProceso = bundle.getString("IDViajeProceso");
+            StatusProceso = bundle.getString("StatusProceso");
+        }
     }
-}
 
     @Override
     public void onRestoreInstanceState(Bundle savedInstanceState) {
@@ -118,8 +119,9 @@ public class MenuActivity extends AppCompatActivity
             // Handle the camera action
         } else if (id == R.id.nav_viajecurso) {
             intent = new Intent(MenuActivity.this, ViajeCursoActivity.class);
-            intent.putExtra("IDViajeProceso",IDViajeProceso);
-            intent.putExtra("StatusProceso",StatusProceso);
+            intent.putExtra("IDViajeProceso", IDViajeProceso);
+            intent.putExtra("StatusProceso", StatusProceso);
+
 
 
         } else if (id == R.id.nav_evidencias) {

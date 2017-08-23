@@ -33,14 +33,14 @@ import java.util.concurrent.ExecutionException;
 
 public class InformacionTab extends Fragment {
     TextView textViewCteOrigen, texViewCteDestino, textViewCdOrigen, textViewCdDestino, textViewEmbalaje,
-            textViewClasificacion, textViewDescripcion, textViewCantidad, textViewPeso, textViewVolumen;
+            textViewClasificacion, textViewDescripcion, textViewCantidad, textViewPeso, textViewVolumen, textViewFolio;
     String strIDViaje;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_informacion, container, false);
-
+        textViewFolio = (TextView) view.findViewById(R.id.textFolio);
         textViewCteOrigen = (TextView) view.findViewById(R.id.textCteOrigen);
         texViewCteDestino = (TextView) view.findViewById(R.id.textCteDestino);
         textViewCdOrigen = (TextView) view.findViewById(R.id.textCdOrigen);
@@ -49,7 +49,7 @@ public class InformacionTab extends Fragment {
         textViewClasificacion = (TextView) view.findViewById(R.id.textClasificacion);
         textViewDescripcion = (TextView) view.findViewById(R.id.textDescripcion);
         textViewCantidad = (TextView) view.findViewById(R.id.textCantidad);
-        textViewPeso = (TextView) view.findViewById(R.id.textCdDestino);
+        textViewPeso = (TextView) view.findViewById(R.id.textPeso);
         textViewVolumen = (TextView) view.findViewById(R.id.textVolumen);
         Bundle bundle = getActivity().getIntent().getExtras();
         strIDViaje = bundle.getString("IDViajeProceso");
@@ -111,7 +111,7 @@ public class InformacionTab extends Fragment {
 
         //REALIZA LA PETICIO
         JSONObject jResult = GetResponse(jdata, jParams);
-
+        textViewFolio.setText(jResult.getString("Folio"));
         textViewCteOrigen.setText(jResult.getString("ClienteOrigen"));
         texViewCteDestino.setText(jResult.getString("ClienteDestino"));
         textViewCdOrigen.setText(jResult.getString("CiudadOrigen"));

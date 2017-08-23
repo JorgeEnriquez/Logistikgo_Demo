@@ -103,7 +103,7 @@ public class ViajeCursoActivity extends AppCompatActivity {
         public Fragment getItem(int position) {
             switch (position) {
                 case 0:
-                    if ("ViajeFinalizado" == "ViajeFinalizado") {
+                    if (false) {
                         ViajeFinalizadoFragment viajeFinalizadoViaje = new ViajeFinalizadoFragment();
                         return viajeFinalizadoViaje;
                     } else {
@@ -111,7 +111,7 @@ public class ViajeCursoActivity extends AppCompatActivity {
                         return viajeCursoTab;
                     }
                 case 1:
-                    if ("ViajeFinalizado" == "ViajeFinalizado") {
+                    if (false) {
                         ViajeFinalizadoFragment viajeFinalizadoInformacion = new ViajeFinalizadoFragment();
                         return viajeFinalizadoInformacion;
                     } else {

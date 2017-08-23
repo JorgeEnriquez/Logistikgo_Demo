@@ -1,7 +1,9 @@
 package com.example.logistik.logistikgodemo;
 
 import android.Manifest;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
@@ -112,7 +114,7 @@ public class ViajeCursoTab extends Fragment implements OnMapReadyCallback {
 //                }
 //            }
 //        });
-        mapView  = (MapView) view.findViewById(R.id.map);
+        mapView = (MapView) view.findViewById(R.id.map);
         mapView.onCreate(savedInstanceState);
         mapView.onResume();
         mapView.getMapAsync(this);
@@ -146,7 +148,7 @@ public class ViajeCursoTab extends Fragment implements OnMapReadyCallback {
 
     private void actualizarUbicacion(Location location) {
         if (location != null) {
-          //  lat = location.getLatitude();
+            //  lat = location.getLatitude();
             coordLng = location.getLongitude();
             coordLat = location.getLatitude();
             agregarMarcador(coordLat, coordLng);
@@ -189,40 +191,67 @@ public class ViajeCursoTab extends Fragment implements OnMapReadyCallback {
 
     // TODO: begin API
     public void setStatus(View view) throws ExecutionException, InterruptedException, JSONException {
+        AlertDialog.Builder alertdialog = new AlertDialog.Builder(getActivity());
+        alertdialog.setTitle("ALERTA");
+        alertdialog.setMessage("¿ Estas seguro de cambiar el status?");
+        alertdialog.setCancelable(false);
+        alertdialog.setPositiveButton("Confirmar", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface alertdialog, int id) {
+        //region CAMBIA STATUS
 
-        //API debug
-        String strURL = "https://api-debug.logistikgo.com/api/Viaje/Bro_SetStatus";
-        //strIDViaje = "380";
-        JSONObject jdata = new JSONObject();
-        JSONObject jParams = new JSONObject();
+                //API debug
+                String strURL = "https://api-debug.logistikgo.com/api/Viaje/Bro_SetStatus";
+                //strIDViaje = "380";
+                JSONObject jdata = new JSONObject();
+                JSONObject jParams = new JSONObject();
 
-        try {
-            jdata.put("strURL", strURL);
+                try {
+                    jdata.put("strURL", strURL);
 
-            jParams.put("strDBro_Viaje", strDBro_Viaje);
-            jParams.put("coordLat", coordLat);
-            jParams.put("coordLng", coordLng);
+                    jParams.put("strDBro_Viaje", strDBro_Viaje);
+                    jParams.put("coordLat", coordLat);
+                    jParams.put("coordLng", coordLng);
 
 
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
 
-        //REALIZA LA PETICIO
-        JSONObject jResult = GetResponse(jdata, jParams);
+                //REALIZA LA PETICIO
+                JSONObject jResult = null;
+                try {
+                    jResult = GetResponse(jdata, jParams);
+                } catch (ExecutionException e) {
+                    e.printStackTrace();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
 
-        String StatusSiguiente = jResult.getString("StatusProceso");
-        if (StatusSiguiente != "FINALIZADO")
-        {
-            button.setText(StatusSiguiente);
-        }
-        else
-            {
-              Intent intent = new Intent(getActivity(), MenuActivity.class);
-                startActivity(intent);
-        }
+                String StatusSiguiente = null;
+                try {
+                    StatusSiguiente = jResult.getString("StatusProceso");
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                if (StatusSiguiente != "FINALIZADO") {
+                    button.setText(StatusSiguiente);
+                } else {
+                    Intent intent = new Intent(getActivity(), MenuActivity.class);
+                    startActivity(intent);
+                }
+                //endregion
+            }
+        });
+        alertdialog.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface alertdialog, int id) {
+//                cancelar();
+            }
+        });
+        alertdialog.show();
 
-//        }
+
     }
 
     public JSONObject GetResponse(JSONObject jdata, JSONObject jParams) throws ExecutionException, InterruptedException, JSONException {

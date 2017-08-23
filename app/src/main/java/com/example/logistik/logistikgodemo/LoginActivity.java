@@ -45,6 +45,7 @@ public class LoginActivity extends AppCompatActivity {
 
     public void onMenuClick(View view) throws ExecutionException, InterruptedException, JSONException {
 
+
         strUsuario = editUsuario.getText().toString();
         strContrasena = editContrasena.getText().toString();
 
@@ -67,18 +68,21 @@ public class LoginActivity extends AppCompatActivity {
             JSONObject jResult = GetResponse(jdata, jParams);
             String NombreUsuario = jResult.getString("NombreUsuario");
 
-                Toast.makeText(this, "Bienvenido " + NombreUsuario, Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Bienvenido " + NombreUsuario, Toast.LENGTH_SHORT).show();
 
-                Context currentContext = this;
-                Intent activity_login = new Intent(currentContext, MenuActivity.class);
-                activity_login.putExtra("NameUsuario", NombreUsuario);
-                activity_login.putExtra("IDViajeProceso", jResult.getString("IDViajeProceso"));
-                activity_login.putExtra("StatusProceso", jResult.getString("StatusProceso"));
+            Context currentContext = this;
+            Intent activity_login = new Intent(currentContext, MenuActivity.class);
+            activity_login.putExtra("NameUsuario", NombreUsuario);
+            activity_login.putExtra("IDViajeProceso", jResult.getString("IDViajeProceso"));
+            activity_login.putExtra("StatusProceso", jResult.getString("StatusProceso"));
 
-                startActivity(activity_login);
-                finish();
+
+
+            startActivity(activity_login);
+            finish();
         }
     }
+
     public static boolean ValidateForm(EditText[] fields) {
         boolean bRes = true;
         for (int i = 0; i < fields.length; i++) {
@@ -160,9 +164,13 @@ public class LoginActivity extends AppCompatActivity {
                 if (strResponse.equals("OK")) {
                     jRes = obj.getJSONObject("jData");
                 }
+                else{
+                    throw new IOException(paramMeta.getString("Message"));
+                }
             } else {
                 String strResponse = connection.getResponseMessage();
                 InputStreamReader streamError = new InputStreamReader(connection.getErrorStream());
+
                 JsonReader jsonReader = new JsonReader(streamError);
 
                 //LEER JSON
