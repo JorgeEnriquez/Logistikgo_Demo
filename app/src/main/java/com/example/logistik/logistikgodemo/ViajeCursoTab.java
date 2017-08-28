@@ -392,7 +392,6 @@ public class ViajeCursoTab extends Fragment implements OnMapReadyCallback {
 
             return resJson;
         }
-
     }
 
 }
