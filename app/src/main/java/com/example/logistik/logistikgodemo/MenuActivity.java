@@ -125,7 +125,7 @@ public class MenuActivity extends AppCompatActivity
 
 
         } else if (id == R.id.nav_evidencias) {
-            intent = new Intent(MenuActivity.this, Activity_seguimientoViaje.class);
+          //  intent = new Intent(MenuActivity.this, Activity_seguimientoViaje.class);
         } else if (id == R.id.nav_ajustes) {
 
         } else if (id == R.id.nav_acercade) {

@@ -23,6 +23,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -152,6 +153,8 @@ public class ViajeCursoTab extends Fragment implements OnMapReadyCallback {
             coordLng = location.getLongitude();
             coordLat = location.getLatitude();
             agregarMarcador(coordLat, coordLng);
+
+
         }
     }
 
@@ -160,6 +163,9 @@ public class ViajeCursoTab extends Fragment implements OnMapReadyCallback {
         public void onLocationChanged(Location location) {
 
             actualizarUbicacion(location);
+
+            SaveCoordenadas(location);
+         //   Toast.makeText(getActivity(), "Longitud:" + coordLng + "Latitud:" + coordLat, Toast.LENGTH_SHORT).show();
         }
 
         @Override
@@ -200,7 +206,7 @@ public class ViajeCursoTab extends Fragment implements OnMapReadyCallback {
         //region CAMBIA STATUS
 
                 //API debug
-                String strURL = "https://api-debug.logistikgo.com/api/Viaje/Bro_SetStatus";
+                String strURL = "https://api-bgk-debug.logistikgo.com/pi/Viaje/Bro_SetStatus";
                 //strIDViaje = "380";
                 JSONObject jdata = new JSONObject();
                 JSONObject jParams = new JSONObject();
@@ -392,6 +398,44 @@ public class ViajeCursoTab extends Fragment implements OnMapReadyCallback {
 
             return resJson;
         }
+    }
+
+    public void SaveCoordenadas(Location location){
+        //region SAVE COORDENADAS
+
+        //API debug
+        String strURL = "https://api-bgk-debug.logistikgo.com/api/Maps/SaveCoordenadasBro";
+
+        JSONObject jdata = new JSONObject();
+        JSONObject jParams = new JSONObject();
+       double fLng = location.getLongitude();
+       double fLat = location.getLatitude();
+        String strIDViaje = strDBro_Viaje;
+
+        try {
+            jdata.put("strURL", strURL);
+
+            jParams.put("strIDViaje", strIDViaje);
+            jParams.put("fLat", fLat);
+            jParams.put("fLng", fLng);
+
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        //REALIZA LA PETICIO
+        JSONObject jResult = null;
+        try {
+            jResult = GetResponse(jdata, jParams);
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        //endregion
     }
 
 }

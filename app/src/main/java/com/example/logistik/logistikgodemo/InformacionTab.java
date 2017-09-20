@@ -90,7 +90,7 @@ public class InformacionTab extends Fragment {
     public void datosg(View view) throws ExecutionException, InterruptedException, JSONException {
 
         //API PRODUCCION
-        String strURL = "https://api-debug.logistikgo.com/api/Viaje/GetDatosViaje";
+        String strURL = "https://api-bgk-debug.logistikgo.com/api/Viaje/GetDatosViaje";
         //strIDViaje = "130";
         JSONObject jdata = new JSONObject();
         JSONObject jParams = new JSONObject();
