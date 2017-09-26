@@ -181,7 +181,7 @@ public class LoginActivity extends AppCompatActivity {
 
                         break; // Break out of the loop
                     } else {
-                        jsonReader.skipValue(); // Skip values of other keys
+                        jsonReader.skipValue(); // Skip values of other key
                     }
                 }
                 jsonReader.close();
