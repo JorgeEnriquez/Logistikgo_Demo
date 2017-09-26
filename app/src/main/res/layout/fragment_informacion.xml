@@ -28,6 +28,7 @@
                 android:weightSum="1">
 
                 <TextView
+                    android:id="@+id/textFolio"
                     android:layout_width="115dp"
                     android:layout_height="wrap_content"
                     android:padding="3dp"
@@ -37,7 +38,7 @@
                     android:textColor="#fff"
                     android:background="@drawable/boton_login"
                     android:text="@string/folio_data"
-                    android:layout_weight="0.1" />
+                    android:layout_weight="0.31" />
 
             </LinearLayout>
 

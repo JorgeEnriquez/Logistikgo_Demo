@@ -1,14 +1,10 @@
 package com.example.logistik.logistikgodemo;
 
-
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
-import android.support.v7.app.ActionBarActivity;
-import android.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.JsonReader;
@@ -19,7 +15,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.app.Activity;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -37,7 +33,6 @@ public class LoginActivity extends AppCompatActivity {
     EditText editContrasena;
     String strUsuario;
     String strContrasena;
-    boolean bRes = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,41 +41,17 @@ public class LoginActivity extends AppCompatActivity {
 
         editUsuario = (EditText) findViewById(R.id.editUsuario);
         editContrasena = (EditText) findViewById(R.id.editContrasena);
-
-    }
-
-//    public void onBackPressed() {
-//        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-//        builder.setTitle("Importante");
-//        builder.setMessage("¿Estas seguro?");
-//        builder.setPositiveButton("Confirmar", new DialogInterface.OnClickListener() {
-//            @Override
-//            public void onClick(DialogInterface dialog , int which) {
-//                finish();
-//            }
-//        });
-//    }
-
-    public void onclickCambiarStatus(View view) {
-
-        AlertDialog.Builder message = new AlertDialog.Builder(this);
-        message.setTitle("Importante");
-        message.setMessage("¿Acepta lo sigiente?");
-        message.setCancelable(false);
-        message.setPositiveButton("Confirmar", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int id) {
-                dialog.cancel();
-            }
-        });
     }
 
     public void onMenuClick(View view) throws ExecutionException, InterruptedException, JSONException {
+
+
         strUsuario = editUsuario.getText().toString();
         strContrasena = editContrasena.getText().toString();
 
         if (ValidateForm(new EditText[]{editUsuario, editContrasena})) {
             //API DEBUG
-            String strURL = "https://api-debug.logistikgo.com/api/Usuarios/ValidarUsuario";
+            String strURL = "https://api-bgk-debug.logistikgo.com/api/Usuarios/ValidarUsuario";
             //API DEBUG VISUAL STUDIO
             JSONObject jdata = new JSONObject();
             JSONObject jParams = new JSONObject();
@@ -104,6 +75,8 @@ public class LoginActivity extends AppCompatActivity {
             activity_login.putExtra("NameUsuario", NombreUsuario);
             activity_login.putExtra("IDViajeProceso", jResult.getString("IDViajeProceso"));
             activity_login.putExtra("StatusProceso", jResult.getString("StatusProceso"));
+
+
 
             startActivity(activity_login);
             finish();
@@ -191,9 +164,13 @@ public class LoginActivity extends AppCompatActivity {
                 if (strResponse.equals("OK")) {
                     jRes = obj.getJSONObject("jData");
                 }
+                else{
+                    throw new IOException(paramMeta.getString("Message"));
+                }
             } else {
                 String strResponse = connection.getResponseMessage();
                 InputStreamReader streamError = new InputStreamReader(connection.getErrorStream());
+
                 JsonReader jsonReader = new JsonReader(streamError);
 
                 //LEER JSON
@@ -241,7 +218,6 @@ public class LoginActivity extends AppCompatActivity {
         @Override
         protected void onPreExecute() {
         }
-
 
         @Override
         protected JSONObject doInBackground(JSONObject... jObject) {

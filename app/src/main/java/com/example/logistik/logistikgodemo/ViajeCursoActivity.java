@@ -39,8 +39,6 @@ public class ViajeCursoActivity extends AppCompatActivity {
      */
     private ViewPager mViewPager;
 
-    Button buttonBack;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,7 +50,12 @@ public class ViajeCursoActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle(R.string.title_activity_viaje_curso);
 
-      //  toolbar.setNavigationOnClickListener();
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {//
+                finish();
+            }
+        });
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
@@ -98,13 +101,24 @@ public class ViajeCursoActivity extends AppCompatActivity {
 
         @Override
         public Fragment getItem(int position) {
-            switch (position){
+
+            switch (position) {
                 case 0:
-                    ViajeCursoTab viajeCursoTab = new ViajeCursoTab();
-                    return viajeCursoTab;
+                    if (false) {
+                        ViajeFinalizadoFragment viajeFinalizadoViaje = new ViajeFinalizadoFragment();
+                        return viajeFinalizadoViaje;
+                    } else {
+                        ViajeCursoTab viajeCursoTab = new ViajeCursoTab();
+                        return viajeCursoTab;
+                    }
                 case 1:
-                    InformacionTab informacionTab = new InformacionTab();
-                    return informacionTab;
+                    if (false) {
+                        ViajeFinalizadoFragment viajeFinalizadoInformacion = new ViajeFinalizadoFragment();
+                        return viajeFinalizadoInformacion;
+                    } else {
+                        InformacionTab informacionTab = new InformacionTab();
+                        return informacionTab;
+                    }
                 default:
                     return null;
             }

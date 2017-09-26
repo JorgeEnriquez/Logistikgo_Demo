@@ -1,7 +1,9 @@
 package com.example.logistik.logistikgodemo;
 
 import android.Manifest;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
@@ -21,6 +23,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -57,7 +60,7 @@ public class ViajeCursoTab extends Fragment implements OnMapReadyCallback {
     double lat = 0.0;
     double coordLng = 0.0;
     double coordLat = 0.0;
-    String strDBro_Viaje;
+    String strIDBro_Viaje;
     String StatusProceso;
 
     @Override
@@ -72,7 +75,7 @@ public class ViajeCursoTab extends Fragment implements OnMapReadyCallback {
 
         Bundle bundle = getActivity().getIntent().getExtras();
         StatusProceso = bundle.getString("StatusProceso");
-        strDBro_Viaje = bundle.getString("IDViajeProceso");
+        strIDBro_Viaje = bundle.getString("IDViajeProceso");
         button = (Button) view.findViewById(R.id.btn_viaje_curso);
         if (bundle != null) {
             button.setText(StatusProceso);
@@ -112,7 +115,7 @@ public class ViajeCursoTab extends Fragment implements OnMapReadyCallback {
 //                }
 //            }
 //        });
-        mapView  = (MapView) view.findViewById(R.id.map);
+        mapView = (MapView) view.findViewById(R.id.map);
         mapView.onCreate(savedInstanceState);
         mapView.onResume();
         mapView.getMapAsync(this);
@@ -146,10 +149,12 @@ public class ViajeCursoTab extends Fragment implements OnMapReadyCallback {
 
     private void actualizarUbicacion(Location location) {
         if (location != null) {
-          //  lat = location.getLatitude();
+            //  lat = location.getLatitude();
             coordLng = location.getLongitude();
             coordLat = location.getLatitude();
             agregarMarcador(coordLat, coordLng);
+
+
         }
     }
 
@@ -158,6 +163,9 @@ public class ViajeCursoTab extends Fragment implements OnMapReadyCallback {
         public void onLocationChanged(Location location) {
 
             actualizarUbicacion(location);
+
+          //  SaveCoordenadas(location);
+         //   Toast.makeText(getActivity(), "Longitud:" + coordLng + "Latitud:" + coordLat, Toast.LENGTH_SHORT).show();
         }
 
         @Override
@@ -189,47 +197,75 @@ public class ViajeCursoTab extends Fragment implements OnMapReadyCallback {
 
     // TODO: begin API
     public void setStatus(View view) throws ExecutionException, InterruptedException, JSONException {
+        AlertDialog.Builder alertdialog = new AlertDialog.Builder(getActivity());
+        alertdialog.setTitle("ALERTA");
+        alertdialog.setMessage("¿ Estas seguro de cambiar el status?");
+        alertdialog.setCancelable(false);
+        alertdialog.setPositiveButton("Confirmar", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface alertdialog, int id) {
+        //region CAMBIA STATUS
 
-        //API debug
-        String strURL = "https://api-debug.logistikgo.com/api/Viaje/Bro_SetStatus";
-        //strIDViaje = "380";
-        JSONObject jdata = new JSONObject();
-        JSONObject jParams = new JSONObject();
+                //API debug
+               // String strURL = "http://192.168.1.54:63510/api/Viaje/Bro_SetStatus";
+                String strURL = "https://api-bgk-debug.logistikgo.com/api/Viaje/Bro_SetStatus";
 
-        try {
-            jdata.put("strURL", strURL);
+                JSONObject jdata = new JSONObject();
+                JSONObject jParams = new JSONObject();
 
-            jParams.put("strDBro_Viaje", strDBro_Viaje);
-            jParams.put("coordLat", coordLat);
-            jParams.put("coordLng", coordLng);
+                try {
+                    jdata.put("strURL", strURL);
+
+                    jParams.put("strIDBro_Viaje", strIDBro_Viaje);
+                    jParams.put("coordLat", coordLat);
+                    jParams.put("coordLng", coordLng);
 
 
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
 
-        //REALIZA LA PETICIO
-        JSONObject jResult = GetResponse(jdata, jParams);
+                //REALIZA LA PETICIO
+                JSONObject jResult = null;
+                try {
+                    jResult = GetResponse(jdata, jParams);
+                } catch (ExecutionException e) {
+                    e.printStackTrace();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
 
-        String StatusSiguiente = jResult.getString("StatusProceso");
-        if (StatusSiguiente != "FINALIZADO")
-        {
-            button.setText(StatusSiguiente);
-        }
-        else
-            {
-              Intent intent = new Intent(getActivity(), MenuActivity.class);
-                startActivity(intent);
-        }
+                String StatusSiguiente = null;
+                try {
+                    StatusSiguiente = jResult.getString("StatusProceso");
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                if (StatusSiguiente != "FINALIZADO") {
+                    button.setText(StatusSiguiente);
+                } else {
+                    Intent intent = new Intent(getActivity(), MenuActivity.class);
+                    startActivity(intent);
+                }
+                //endregion
+            }
+        });
+        alertdialog.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface alertdialog, int id) {
+//                cancelar();
+            }
+        });
+        alertdialog.show();
 
-//        }
+
     }
 
     public JSONObject GetResponse(JSONObject jdata, JSONObject jParams) throws ExecutionException, InterruptedException, JSONException {
         JSONObject resJson = null;
 
         //Instantiate new instance of our class
-        LoginActivity.HttpGetRequest getRequest = new LoginActivity.HttpGetRequest();
+        ViajeCursoTab.HttpGetRequest getRequest = new ViajeCursoTab.HttpGetRequest();
 
         resJson = getRequest.execute(jdata, jParams).get();
 
@@ -255,6 +291,7 @@ public class ViajeCursoTab extends Fragment implements OnMapReadyCallback {
             connection.setDoInput(true);
 
             //ENCABEZADOS DE LA PETICIÓN
+          //  connection.setRequestProperty("Host", "localhost:63510");
             connection.setRequestProperty("Content-Type", "application/json; charset=utf-8");
 
             //Connect to our url
@@ -363,7 +400,44 @@ public class ViajeCursoTab extends Fragment implements OnMapReadyCallback {
 
             return resJson;
         }
+    }
 
+    public void SaveCoordenadas(Location location){
+        //region SAVE COORDENADAS
+
+        //API debug
+        String strURL = "https://api-bgk-debug.logistikgo.com/api/Maps/SaveCoordenadasBro";
+
+        JSONObject jdata = new JSONObject();
+        JSONObject jParams = new JSONObject();
+       double fLng = location.getLongitude();
+       double fLat = location.getLatitude();
+        String strIDViaje = strIDBro_Viaje;
+
+        try {
+            jdata.put("strURL", strURL);
+
+            jParams.put("strIDViaje", strIDViaje);
+            jParams.put("fLat", fLat);
+            jParams.put("fLng", fLng);
+
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        //REALIZA LA PETICIO
+        JSONObject jResult = null;
+        try {
+            jResult = GetResponse(jdata, jParams);
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        //endregion
     }
 
 }
