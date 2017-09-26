@@ -60,7 +60,7 @@ public class ViajeCursoTab extends Fragment implements OnMapReadyCallback {
     double lat = 0.0;
     double coordLng = 0.0;
     double coordLat = 0.0;
-    String strDBro_Viaje;
+    String strIDBro_Viaje;
     String StatusProceso;
 
     @Override
@@ -75,7 +75,7 @@ public class ViajeCursoTab extends Fragment implements OnMapReadyCallback {
 
         Bundle bundle = getActivity().getIntent().getExtras();
         StatusProceso = bundle.getString("StatusProceso");
-        strDBro_Viaje = bundle.getString("IDViajeProceso");
+        strIDBro_Viaje = bundle.getString("IDViajeProceso");
         button = (Button) view.findViewById(R.id.btn_viaje_curso);
         if (bundle != null) {
             button.setText(StatusProceso);
@@ -164,7 +164,7 @@ public class ViajeCursoTab extends Fragment implements OnMapReadyCallback {
 
             actualizarUbicacion(location);
 
-            SaveCoordenadas(location);
+          //  SaveCoordenadas(location);
          //   Toast.makeText(getActivity(), "Longitud:" + coordLng + "Latitud:" + coordLat, Toast.LENGTH_SHORT).show();
         }
 
@@ -206,15 +206,16 @@ public class ViajeCursoTab extends Fragment implements OnMapReadyCallback {
         //region CAMBIA STATUS
 
                 //API debug
-                String strURL = "https://api-bgk-debug.logistikgo.com/pi/Viaje/Bro_SetStatus";
-                //strIDViaje = "380";
+               // String strURL = "http://192.168.1.54:63510/api/Viaje/Bro_SetStatus";
+                String strURL = "https://api-bgk-debug.logistikgo.com/api/Viaje/Bro_SetStatus";
+
                 JSONObject jdata = new JSONObject();
                 JSONObject jParams = new JSONObject();
 
                 try {
                     jdata.put("strURL", strURL);
 
-                    jParams.put("strDBro_Viaje", strDBro_Viaje);
+                    jParams.put("strIDBro_Viaje", strIDBro_Viaje);
                     jParams.put("coordLat", coordLat);
                     jParams.put("coordLng", coordLng);
 
@@ -264,7 +265,7 @@ public class ViajeCursoTab extends Fragment implements OnMapReadyCallback {
         JSONObject resJson = null;
 
         //Instantiate new instance of our class
-        LoginActivity.HttpGetRequest getRequest = new LoginActivity.HttpGetRequest();
+        ViajeCursoTab.HttpGetRequest getRequest = new ViajeCursoTab.HttpGetRequest();
 
         resJson = getRequest.execute(jdata, jParams).get();
 
@@ -290,6 +291,7 @@ public class ViajeCursoTab extends Fragment implements OnMapReadyCallback {
             connection.setDoInput(true);
 
             //ENCABEZADOS DE LA PETICIÓN
+          //  connection.setRequestProperty("Host", "localhost:63510");
             connection.setRequestProperty("Content-Type", "application/json; charset=utf-8");
 
             //Connect to our url
@@ -410,7 +412,7 @@ public class ViajeCursoTab extends Fragment implements OnMapReadyCallback {
         JSONObject jParams = new JSONObject();
        double fLng = location.getLongitude();
        double fLat = location.getLatitude();
-        String strIDViaje = strDBro_Viaje;
+        String strIDViaje = strIDBro_Viaje;
 
         try {
             jdata.put("strURL", strURL);
