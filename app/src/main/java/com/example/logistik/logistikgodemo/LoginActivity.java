@@ -66,6 +66,7 @@ public class LoginActivity extends AppCompatActivity {
 
             //REALIZA LA PETICION
             JSONObject jResult = GetResponse(jdata, jParams);
+
             String NombreUsuario = jResult.getString("NombreUsuario");
 
             Toast.makeText(this, "Bienvenido " + NombreUsuario, Toast.LENGTH_SHORT).show();
@@ -168,33 +169,55 @@ public class LoginActivity extends AppCompatActivity {
                     throw new IOException(paramMeta.getString("Message"));
                 }
             } else {
-                String strResponse = connection.getResponseMessage();
-                InputStreamReader streamError = new InputStreamReader(connection.getErrorStream());
+                InputStreamReader streamReader = new InputStreamReader(connection.getErrorStream());
 
-                JsonReader jsonReader = new JsonReader(streamError);
+                StringBuilder stringBuilder = new StringBuilder();
 
-                //LEER JSON
-                jsonReader.beginObject(); // Start processing the JSON object
-                while (jsonReader.hasNext()) { // Loop through all keys
-                    String key = jsonReader.nextName(); // Fetch the next key
-                    if (key.equals("Message")) { // VERIFICA EL NOMBRE DEL CAMPO
+                //LEER JSON MANUAL
+                //Create a new buffered reader and String Builder
+                BufferedReader reader = new BufferedReader(streamReader);
 
-                        break; // Break out of the loop
-                    } else {
-                        jsonReader.skipValue(); // Skip values of other key
-                    }
+                //Check if the line we are reading is not null
+                while ((inputLine = reader.readLine()) != null) {
+                    stringBuilder.append(inputLine);
                 }
-                jsonReader.close();
-
-                Log.d("ERROR", strResponse);
+                //Close our InputStream and Buffered reader
+                reader.close();
+                streamReader.close();
+                //Set our result equal to our stringBuilder
+                String _strRes = stringBuilder.toString();
+                JSONObject obj = new JSONObject(_strRes);
+                JSONObject paramMeta = obj.getJSONObject("jMeta");
+                throw new IOException(paramMeta.getString("Message"));
+//                String strResponse = connection.getResponseMessage();
+//                InputStreamReader streamError = new InputStreamReader(connection.getErrorStream());
+//
+//                JsonReader jsonReader = new JsonReader(streamError);
+//
+//                //LEER JSON
+//                jsonReader.beginObject(); // Start processing the JSON object
+//                while (jsonReader.hasNext()) { // Loop through all keys
+//                    String key = jsonReader.nextName(); // Fetch the next key
+//                    if (key.equals("Message")) { // VERIFICA EL NOMBRE DEL CAMPO
+//
+//                        break; // Break out of the loop
+//                    } else {
+//                        jsonReader.skipValue(); // Skip values of other keys
+//                    }
+//                }
+//                jsonReader.close();
+//
+//                Log.d("ERROR", strResponse);
             }
         } catch (MalformedURLException e) {
             e.printStackTrace();
-        } catch (IOException e) {
+        } catch (Exception e) {
             e.printStackTrace();
-        } catch (JSONException e) {
-            e.printStackTrace();
+            Log.e("error", e.getMessage());
         }
+//        } catch (JSONException e) {
+//            e.printStackTrace();
+//        }
 
         return jRes;
     }
