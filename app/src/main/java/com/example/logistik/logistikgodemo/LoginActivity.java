@@ -67,20 +67,23 @@ public class LoginActivity extends AppCompatActivity {
             //REALIZA LA PETICION
             JSONObject jResult = GetResponse(jdata, jParams);
 
-            String NombreUsuario = jResult.getString("NombreUsuario");
-
-            Toast.makeText(this, "Bienvenido " + NombreUsuario, Toast.LENGTH_SHORT).show();
-
-            Context currentContext = this;
-            Intent activity_login = new Intent(currentContext, MenuActivity.class);
-            activity_login.putExtra("NameUsuario", NombreUsuario);
-            activity_login.putExtra("IDViajeProceso", jResult.getString("IDViajeProceso"));
-            activity_login.putExtra("StatusProceso", jResult.getString("StatusProceso"));
-
-
-
-            startActivity(activity_login);
-            finish();
+            //  if (jResult.getString("Response").equals("OK")) {
+//                    jRes = obj.getJSONObject("jData");
+//                }
+            if (jResult.getJSONObject("jMeta").getString("Response").equals("OK")) {
+                jResult = jResult.getJSONObject("jData");
+                String NombreUsuario = jResult.getString("NombreUsuario");
+                Toast.makeText(this, "Bienvenido " + NombreUsuario, Toast.LENGTH_SHORT).show();
+                Context currentContext = this;
+                Intent activity_login = new Intent(currentContext, MenuActivity.class);
+                activity_login.putExtra("NameUsuario", NombreUsuario);
+                activity_login.putExtra("IDViajeProceso", jResult.getString("IDViajeProceso"));
+                activity_login.putExtra("StatusProceso", jResult.getString("StatusProceso"));
+                startActivity(activity_login);
+                finish();
+            } else {
+                Toast.makeText(this, jResult.getJSONObject("jMeta").getString("Message"), Toast.LENGTH_SHORT).show();
+            }
         }
     }
 
@@ -138,37 +141,36 @@ public class LoginActivity extends AppCompatActivity {
             int HttpResult = connection.getResponseCode();
 
             //VERIFICAR SI LA CONEXION SE REALIZO DE FORMA CORRECTA = 200
-            if (HttpResult == HttpURLConnection.HTTP_OK) {
+             if (HttpResult == HttpURLConnection.HTTP_OK) {
 
-                InputStreamReader streamReader = new InputStreamReader(connection.getInputStream());
+            InputStreamReader streamReader = new InputStreamReader(connection.getInputStream());
 
-                StringBuilder stringBuilder = new StringBuilder();
+            StringBuilder stringBuilder = new StringBuilder();
 
-                //LEER JSON MANUAL
-                //Create a new buffered reader and String Builder
-                BufferedReader reader = new BufferedReader(streamReader);
+            //LEER JSON MANUAL
+            //Create a new buffered reader and String Builder
+            BufferedReader reader = new BufferedReader(streamReader);
 
-                //Check if the line we are reading is not null
-                while ((inputLine = reader.readLine()) != null) {
-                    stringBuilder.append(inputLine);
-                }
-                //Close our InputStream and Buffered reader
-                reader.close();
-                streamReader.close();
-                //Set our result equal to our stringBuilder
-                String _strRes = stringBuilder.toString();
-                JSONObject obj = new JSONObject(_strRes);
-                JSONObject paramMeta = obj.getJSONObject("jMeta");
+            //Check if the line we are reading is not null
+            while ((inputLine = reader.readLine()) != null) {
+                stringBuilder.append(inputLine);
+            }
+            //Close our InputStream and Buffered reader
+            reader.close();
+            streamReader.close();
+            //Set our result equal to our stringBuilder
+            String _strRes = stringBuilder.toString();
+            jRes = new JSONObject(_strRes);
+         //   jRes = obj.getJSONObject("jMeta");
 
-                String strResponse = paramMeta.getString("Response");
+            //  jRes = obj.getJSONObject("jData");
+            // String strResponse = paramMeta.getString("Response");
 
-                if (strResponse.equals("OK")) {
-                    jRes = obj.getJSONObject("jData");
-                }
-                else{
-                    throw new IOException(paramMeta.getString("Message"));
-                }
-            } else {
+//                if (strResponse.equals("OK")) {
+//                    jRes = obj.getJSONObject("jData");
+//                }
+               }
+            else {
                 InputStreamReader streamReader = new InputStreamReader(connection.getErrorStream());
 
                 StringBuilder stringBuilder = new StringBuilder();
@@ -186,9 +188,9 @@ public class LoginActivity extends AppCompatActivity {
                 streamReader.close();
                 //Set our result equal to our stringBuilder
                 String _strRes = stringBuilder.toString();
-                JSONObject obj = new JSONObject(_strRes);
-                JSONObject paramMeta = obj.getJSONObject("jMeta");
-                throw new IOException(paramMeta.getString("Message"));
+                 jRes = new JSONObject(_strRes);
+             //   JSONObject paramMeta = obj.getJSONObject("jMeta");
+          //      throw new IOException(paramMeta.getString("Message"));
 //                String strResponse = connection.getResponseMessage();
 //                InputStreamReader streamError = new InputStreamReader(connection.getErrorStream());
 //
@@ -208,7 +210,7 @@ public class LoginActivity extends AppCompatActivity {
 //                jsonReader.close();
 //
 //                Log.d("ERROR", strResponse);
-            }
+              }
         } catch (MalformedURLException e) {
             e.printStackTrace();
         } catch (Exception e) {
