@@ -39,6 +39,8 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+import com.google.maps.android.SphericalUtil;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -49,6 +51,7 @@ import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.Date;
 import java.util.concurrent.ExecutionException;
 
 public class ViajeCursoTab extends Fragment implements OnMapReadyCallback {
@@ -60,8 +63,11 @@ public class ViajeCursoTab extends Fragment implements OnMapReadyCallback {
     double lat = 0.0;
     double coordLng = 0.0;
     double coordLat = 0.0;
-    String strIDBro_Viaje;
+    String strIDViaje;
     String StatusProceso;
+    LatLng lastCoordenadas;
+    Date lastUpdate = new Date();
+    int secondLastUpdate = 0;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -75,7 +81,7 @@ public class ViajeCursoTab extends Fragment implements OnMapReadyCallback {
 
         Bundle bundle = getActivity().getIntent().getExtras();
         StatusProceso = bundle.getString("StatusProceso");
-        strIDBro_Viaje = bundle.getString("IDViajeProceso");
+        strIDViaje = bundle.getString("IDViajeProceso");
         button = (Button) view.findViewById(R.id.btn_viaje_curso);
         if (bundle != null) {
             button.setText(StatusProceso);
@@ -163,9 +169,8 @@ public class ViajeCursoTab extends Fragment implements OnMapReadyCallback {
         public void onLocationChanged(Location location) {
 
             actualizarUbicacion(location);
-
-          //  SaveCoordenadas(location);
-         //   Toast.makeText(getActivity(), "Longitud:" + coordLng + "Latitud:" + coordLat, Toast.LENGTH_SHORT).show();
+             SaveCoordenadas(location);
+            //   Toast.makeText(getActivity(), "Longitud:" + coordLng + "Latitud:" + coordLat, Toast.LENGTH_SHORT).show();
         }
 
         @Override
@@ -203,11 +208,11 @@ public class ViajeCursoTab extends Fragment implements OnMapReadyCallback {
         alertdialog.setCancelable(false);
         alertdialog.setPositiveButton("Confirmar", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface alertdialog, int id) {
-        //region CAMBIA STATUS
+                //region CAMBIA STATUS
 
                 //API debug
-               // String strURL = "http://192.168.1.54:63510/api/Viaje/Bro_SetStatus";
-                String strURL = "https://api-bgk-debug.logistikgo.com/api/Viaje/Bro_SetStatus";
+                // String strURL = "http://192.168.1.54:63510/api/Viaje/Bro_SetStatus";
+                String strURL = "https://api.logistikgo.com/api/Viaje/SetStatusViaje";
 
                 JSONObject jdata = new JSONObject();
                 JSONObject jParams = new JSONObject();
@@ -215,7 +220,7 @@ public class ViajeCursoTab extends Fragment implements OnMapReadyCallback {
                 try {
                     jdata.put("strURL", strURL);
 
-                    jParams.put("strIDBro_Viaje", strIDBro_Viaje);
+                    jParams.put("strIDViaje", strIDViaje);
                     jParams.put("coordLat", coordLat);
                     jParams.put("coordLng", coordLng);
 
@@ -291,7 +296,7 @@ public class ViajeCursoTab extends Fragment implements OnMapReadyCallback {
             connection.setDoInput(true);
 
             //ENCABEZADOS DE LA PETICIÓN
-          //  connection.setRequestProperty("Host", "localhost:63510");
+            //  connection.setRequestProperty("Host", "localhost:63510");
             connection.setRequestProperty("Content-Type", "application/json; charset=utf-8");
 
             //Connect to our url
@@ -402,17 +407,21 @@ public class ViajeCursoTab extends Fragment implements OnMapReadyCallback {
         }
     }
 
-    public void SaveCoordenadas(Location location){
+    public void SaveCoordenadas(Location location) {
         //region SAVE COORDENADAS
 
         //API debug
-        String strURL = "https://api-bgk-debug.logistikgo.com/api/Maps/SaveCoordenadasBro";
+        String strURL = "https://api.logistikgo.com/api/Maps/SaveCoordenadasBro";
 
         JSONObject jdata = new JSONObject();
         JSONObject jParams = new JSONObject();
-       double fLng = location.getLongitude();
-       double fLat = location.getLatitude();
-        String strIDViaje = strIDBro_Viaje;
+
+        double fLng = location.getLongitude();
+        double fLat = location.getLatitude();
+        LatLng currentCoordenadas = new LatLng(fLng, fLat);
+
+
+        // String strDViaje = strIDViaje;
 
         try {
             jdata.put("strURL", strURL);
@@ -426,10 +435,23 @@ public class ViajeCursoTab extends Fragment implements OnMapReadyCallback {
             e.printStackTrace();
         }
 
+
         //REALIZA LA PETICIO
-        JSONObject jResult = null;
+//        JSONObject jResult = null;
+//        try {
+//            if (lastCoordenadas != null) {
+//                double distance = SphericalUtil.computeDistanceBetween(currentCoordenadas, lastCoordenadas);
+//                distance = distance / 1000;
+//                //  Toast.makeText(getActivity(), Double.toString(distance), Toast.LENGTH_SHORT).show();
+//
+//                if (secondLastUpdate > 30 && distance > 5) {
+//                    GetResponse(jdata, jParams);
+//                }
+//            }
+//
+
         try {
-            jResult = GetResponse(jdata, jParams);
+            JSONObject jResult = GetResponse(jdata, jParams);
         } catch (ExecutionException e) {
             e.printStackTrace();
         } catch (InterruptedException e) {
@@ -437,6 +459,19 @@ public class ViajeCursoTab extends Fragment implements OnMapReadyCallback {
         } catch (JSONException e) {
             e.printStackTrace();
         }
+
+//            lastCoordenadas = new LatLng(fLng, fLat);
+//            lastUpdate = new Date();
+//            secondLastUpdate = lastUpdate.getMinutes();
+
+//        } catch (ExecutionException e) {
+//            e.printStackTrace();
+//        } catch (InterruptedException e) {
+//            e.printStackTrace();
+//        } catch (JSONException e) {
+//            e.printStackTrace();
+//        }
+
         //endregion
     }
 

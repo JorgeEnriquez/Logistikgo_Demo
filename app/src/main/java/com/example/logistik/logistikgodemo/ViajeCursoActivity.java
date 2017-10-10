@@ -23,6 +23,7 @@ import android.widget.Toast;
 import android.widget.Button;
 
 public class ViajeCursoActivity extends AppCompatActivity {
+    String strIDViaje;
 
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
@@ -44,6 +45,8 @@ public class ViajeCursoActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_viaje_curso);
+        Bundle bundle = this.getIntent().getExtras();
+        strIDViaje = bundle.getString("IDViajeProceso");
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -81,10 +84,11 @@ public class ViajeCursoActivity extends AppCompatActivity {
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_acercade) {
-            Intent intent = new Intent(ViajeCursoActivity.this, AcercadeActivity.class);
-            startActivity(intent);
-        }
+        //MENU BAR
+//        if (id == R.id.action_acercade) {
+//            Intent intent = new Intent(ViajeCursoActivity.this, AcercadeActivity.class);
+//            startActivity(intent);
+//        }
 
         return super.onOptionsItemSelected(item);
     }
@@ -104,7 +108,7 @@ public class ViajeCursoActivity extends AppCompatActivity {
 
             switch (position) {
                 case 0:
-                    if (false) {
+                    if (strIDViaje.equals(0)) {
                         ViajeFinalizadoFragment viajeFinalizadoViaje = new ViajeFinalizadoFragment();
                         return viajeFinalizadoViaje;
                     } else {
@@ -112,7 +116,7 @@ public class ViajeCursoActivity extends AppCompatActivity {
                         return viajeCursoTab;
                     }
                 case 1:
-                    if (false) {
+                    if (strIDViaje.equals(0)) {
                         ViajeFinalizadoFragment viajeFinalizadoInformacion = new ViajeFinalizadoFragment();
                         return viajeFinalizadoInformacion;
                     } else {

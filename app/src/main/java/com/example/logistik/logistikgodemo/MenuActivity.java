@@ -100,9 +100,11 @@ public class MenuActivity extends AppCompatActivity
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_acercade) {
-            Intent intent = new Intent(MenuActivity.this, AcercadeActivity.class);
+        //MENU BAR
+        if (id == R.id.action_Cerrar_sesion) {
+            Intent intent = new Intent(MenuActivity.this, LoginActivity.class);
             startActivity(intent);
+            finish();
         }
 
         return super.onOptionsItemSelected(item);
