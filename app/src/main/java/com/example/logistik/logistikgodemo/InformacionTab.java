@@ -32,8 +32,8 @@ import java.net.URL;
 import java.util.concurrent.ExecutionException;
 
 public class InformacionTab extends Fragment {
-    TextView textViewCteOrigen, texViewCteDestino, textViewCdOrigen, textViewCdDestino, textViewEmbalaje,
-            textViewClasificacion, textViewDescripcion, textViewCantidad, textViewPeso, textViewVolumen, textViewFolio;
+    TextView textViewCteOrigen, texViewCteDestino, textViewCdOrigen, textViewCdDestino, textViewMercancia,
+            textViewClasificacion, textViewObservaciones, textViewCantidad, textViewPeso, textViewPresentacion, textViewFolio;
     String strIDViaje;
 
     @Override
@@ -45,12 +45,12 @@ public class InformacionTab extends Fragment {
         texViewCteDestino = (TextView) view.findViewById(R.id.textCteDestino);
         textViewCdOrigen = (TextView) view.findViewById(R.id.textCdOrigen);
         textViewCdDestino = (TextView) view.findViewById(R.id.textCdDestino);
-//        textViewEmbalaje = (TextView) view.findViewById(R.id.textEmbalaje);
-//        textViewClasificacion = (TextView) view.findViewById(R.id.textClasificacion);
-//        textViewDescripcion = (TextView) view.findViewById(R.id.textDescripcion);
-//        textViewCantidad = (TextView) view.findViewById(R.id.textCantidad);
-//        textViewPeso = (TextView) view.findViewById(R.id.textPeso);
-//        textViewVolumen = (TextView) view.findViewById(R.id.textVolumen);
+        textViewMercancia = (TextView) view.findViewById(R.id.textMerccancia);
+        textViewPresentacion = (TextView) view.findViewById(R.id.textPresentacion);
+        textViewClasificacion = (TextView) view.findViewById(R.id.textClasificacion);
+        textViewObservaciones = (TextView) view.findViewById(R.id.textDescripcion);
+        textViewCantidad = (TextView) view.findViewById(R.id.textCantidad);
+        textViewPeso = (TextView) view.findViewById(R.id.textPeso);
         Bundle bundle = getActivity().getIntent().getExtras();
         strIDViaje = bundle.getString("IDViajeProceso");
 
@@ -116,12 +116,12 @@ public class InformacionTab extends Fragment {
         texViewCteDestino.setText(jResult.getString("ClienteDestino"));
         textViewCdOrigen.setText(jResult.getString("CiudadOrigen"));
         textViewCdDestino.setText(jResult.getString("CiudadDestino"));
-//        textViewEmbalaje.setText(jResult.getString("Embalaje"));
-//        textViewClasificacion.setText(jResult.getString("Clasificacion"));
-//        textViewDescripcion.setText(jResult.getString("Descripcion"));
-//        textViewCantidad.setText(jResult.getString("Cantidad"));
-//        textViewPeso.setText(jResult.getString("Peso"));
-//        textViewVolumen.setText(jResult.getString("Volumen"));
+        textViewMercancia.setText(jResult.getString("Mercancia"));
+        textViewPresentacion.setText(jResult.getString("Presentacion"));
+        textViewClasificacion.setText(jResult.getString("Clasificacion"));
+        textViewObservaciones.setText(jResult.getString("Observaciones"));
+        textViewCantidad.setText(jResult.getString("Cantidad"));
+        textViewPeso.setText(jResult.getString("Peso"));
 
 //        }
     }
