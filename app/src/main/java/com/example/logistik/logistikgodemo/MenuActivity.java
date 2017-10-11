@@ -104,6 +104,7 @@ public class MenuActivity extends AppCompatActivity
         if (id == R.id.action_Cerrar_sesion) {
             Intent intent = new Intent(MenuActivity.this, LoginActivity.class);
             startActivity(intent);
+            overridePendingTransition(R.anim.zoom_back_in, R.anim.zoom_back_out);
             finish();
         }
 
@@ -134,6 +135,7 @@ public class MenuActivity extends AppCompatActivity
 
         if (intent != null) {
             startActivity(intent);
+            overridePendingTransition(R.anim.left_in, R.anim.left_out);
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

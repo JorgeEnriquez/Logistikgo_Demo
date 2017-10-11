@@ -5,10 +5,13 @@ import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
+import android.support.transition.Transition;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.transition.Slide;
 import android.util.JsonReader;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -80,6 +83,7 @@ public class LoginActivity extends AppCompatActivity {
                 activity_login.putExtra("IDViajeProceso", jResult.getString("IDViajeProceso"));
                 activity_login.putExtra("StatusProceso", jResult.getString("StatusProceso"));
                 startActivity(activity_login);
+                overridePendingTransition(R.anim.zoom_forward_in, R.anim.zoom_forward_out);
                 finish();
             } else {
                 Toast.makeText(this, jResult.getJSONObject("jMeta").getString("Message"), Toast.LENGTH_SHORT).show();
