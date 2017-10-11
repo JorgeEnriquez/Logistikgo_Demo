@@ -411,7 +411,7 @@ public class ViajeCursoTab extends Fragment implements OnMapReadyCallback {
         //region SAVE COORDENADAS
 
         //API debug
-        String strURL = "https://api.logistikgo.com/api/Maps/SaveCoordenadasBro";
+        String strURL = "https://api.logistikgo.com/api/Maps/SaveCoordenadas";
 
         JSONObject jdata = new JSONObject();
         JSONObject jParams = new JSONObject();
