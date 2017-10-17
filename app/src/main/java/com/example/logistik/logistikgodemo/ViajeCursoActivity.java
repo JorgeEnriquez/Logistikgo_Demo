@@ -112,27 +112,44 @@ public class ViajeCursoActivity extends AppCompatActivity {
 
         @Override
         public Fragment getItem(int position) {
-
-            switch (position) {
-                case 0:
-                    if (strIDViaje.equals(0)) {
-                        ViajeFinalizadoFragment viajeFinalizadoViaje = new ViajeFinalizadoFragment();
-                        return viajeFinalizadoViaje;
-                    } else {
-                        ViajeCursoTab viajeCursoTab = new ViajeCursoTab();
-                        return viajeCursoTab;
-                    }
-                case 1:
-                    if (strIDViaje.equals(0)) {
-                        ViajeFinalizadoFragment viajeFinalizadoInformacion = new ViajeFinalizadoFragment();
-                        return viajeFinalizadoInformacion;
-                    } else {
-                        InformacionTab informacionTab = new InformacionTab();
-                        return informacionTab;
-                    }
-                default:
-                    return null;
+            if (strIDViaje.equals("0")) {
+                ViajeFinalizadoFragment viajeFinalizadoViaje = new ViajeFinalizadoFragment();
+                return viajeFinalizadoViaje;
             }
+            else {
+                switch (position) {
+                    case 0:
+                            ViajeCursoTab viajeCursoTab = new ViajeCursoTab();
+                            return viajeCursoTab;
+                    case 1:
+                            InformacionTab informacionTab = new InformacionTab();
+                            return informacionTab;
+
+                    default:
+                        return null;
+                }
+            }
+
+//            switch (position) {
+//                case 0:
+//                    if (strIDViaje.equals("0")) {
+//                        ViajeFinalizadoFragment viajeFinalizadoViaje = new ViajeFinalizadoFragment();
+//                        return viajeFinalizadoViaje;
+//                    } else {
+//                        ViajeCursoTab viajeCursoTab = new ViajeCursoTab();
+//                        return viajeCursoTab;
+//                    }
+//                case 1:
+//                    if (strIDViaje.equals("0")) {
+//                        ViajeFinalizadoFragment viajeFinalizadoInformacion = new ViajeFinalizadoFragment();
+//                        return viajeFinalizadoInformacion;
+//                    } else {
+//                        InformacionTab informacionTab = new InformacionTab();
+//                        return informacionTab;
+//                    }
+//                default:
+//                    return null;
+//            }
         }
 
         @Override

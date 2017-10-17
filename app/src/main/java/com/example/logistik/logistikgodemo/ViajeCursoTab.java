@@ -89,6 +89,7 @@ public class ViajeCursoTab extends Fragment implements OnMapReadyCallback {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 try {
                     setStatus(view);
                 } catch (ExecutionException e) {
@@ -169,7 +170,7 @@ public class ViajeCursoTab extends Fragment implements OnMapReadyCallback {
         public void onLocationChanged(Location location) {
 
             actualizarUbicacion(location);
-             SaveCoordenadas(location);
+            SaveCoordenadas(location);
             //   Toast.makeText(getActivity(), "Longitud:" + coordLng + "Latitud:" + coordLat, Toast.LENGTH_SHORT).show();
         }
 
@@ -247,12 +248,28 @@ public class ViajeCursoTab extends Fragment implements OnMapReadyCallback {
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-                if (StatusSiguiente != "FINALIZADO") {
-                    button.setText(StatusSiguiente);
-                } else {
+                if (StatusSiguiente.equals("")) {
                     Intent intent = new Intent(getActivity(), MenuActivity.class);
                     startActivity(intent);
+                } else {
+                    AlertDialog.Builder alerBuilder = new AlertDialog.Builder(getActivity());
+                    alerBuilder.setTitle("ALERTA");
+                    alerBuilder.setMessage("Estatus cambiado correctamente");
+                    alerBuilder.setCancelable(false);
+
+                    alerBuilder.setPositiveButton("Confirmar", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface alertdialog, int id) {
+                        }
+                    });
+                            button.setText(StatusSiguiente);
                 }
+
+//                if (StatusSiguiente != "FINALIZADO") {
+//
+//                } else {
+//                    Intent intent = new Intent(getActivity(), MenuActivity.class);
+//                    startActivity(intent);
+//                }
                 //endregion
             }
         });
