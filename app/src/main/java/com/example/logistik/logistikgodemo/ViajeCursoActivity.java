@@ -23,6 +23,7 @@ import android.widget.Toast;
 import android.widget.Button;
 
 public class ViajeCursoActivity extends AppCompatActivity {
+    String strIDViaje;
 
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
@@ -44,6 +45,8 @@ public class ViajeCursoActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_viaje_curso);
+        Bundle bundle = this.getIntent().getExtras();
+        strIDViaje = bundle.getString("IDViajeProceso");
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -53,6 +56,7 @@ public class ViajeCursoActivity extends AppCompatActivity {
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {//
+                onBackPressed();
                 finish();
             }
         });
@@ -69,6 +73,12 @@ public class ViajeCursoActivity extends AppCompatActivity {
     }
 
     @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        overridePendingTransition(R.anim.right_in, R.anim.right_out);
+    }
+
+    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_viaje_curso, menu);
@@ -81,10 +91,11 @@ public class ViajeCursoActivity extends AppCompatActivity {
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_acercade) {
-            Intent intent = new Intent(ViajeCursoActivity.this, AcercadeActivity.class);
-            startActivity(intent);
-        }
+        //MENU BAR
+//        if (id == R.id.action_acercade) {
+//            Intent intent = new Intent(ViajeCursoActivity.this, AcercadeActivity.class);
+//            startActivity(intent);
+//        }
 
         return super.onOptionsItemSelected(item);
     }
@@ -101,27 +112,44 @@ public class ViajeCursoActivity extends AppCompatActivity {
 
         @Override
         public Fragment getItem(int position) {
-
-            switch (position) {
-                case 0:
-                    if (false) {
-                        ViajeFinalizadoFragment viajeFinalizadoViaje = new ViajeFinalizadoFragment();
-                        return viajeFinalizadoViaje;
-                    } else {
-                        ViajeCursoTab viajeCursoTab = new ViajeCursoTab();
-                        return viajeCursoTab;
-                    }
-                case 1:
-                    if (false) {
-                        ViajeFinalizadoFragment viajeFinalizadoInformacion = new ViajeFinalizadoFragment();
-                        return viajeFinalizadoInformacion;
-                    } else {
-                        InformacionTab informacionTab = new InformacionTab();
-                        return informacionTab;
-                    }
-                default:
-                    return null;
+            if (strIDViaje.equals("0")) {
+                ViajeFinalizadoFragment viajeFinalizadoViaje = new ViajeFinalizadoFragment();
+                return viajeFinalizadoViaje;
             }
+            else {
+                switch (position) {
+                    case 0:
+                            ViajeCursoTab viajeCursoTab = new ViajeCursoTab();
+                            return viajeCursoTab;
+                    case 1:
+                            InformacionTab informacionTab = new InformacionTab();
+                            return informacionTab;
+
+                    default:
+                        return null;
+                }
+            }
+
+//            switch (position) {
+//                case 0:
+//                    if (strIDViaje.equals("0")) {
+//                        ViajeFinalizadoFragment viajeFinalizadoViaje = new ViajeFinalizadoFragment();
+//                        return viajeFinalizadoViaje;
+//                    } else {
+//                        ViajeCursoTab viajeCursoTab = new ViajeCursoTab();
+//                        return viajeCursoTab;
+//                    }
+//                case 1:
+//                    if (strIDViaje.equals("0")) {
+//                        ViajeFinalizadoFragment viajeFinalizadoInformacion = new ViajeFinalizadoFragment();
+//                        return viajeFinalizadoInformacion;
+//                    } else {
+//                        InformacionTab informacionTab = new InformacionTab();
+//                        return informacionTab;
+//                    }
+//                default:
+//                    return null;
+//            }
         }
 
         @Override

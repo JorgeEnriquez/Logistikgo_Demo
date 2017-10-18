@@ -1,6 +1,7 @@
 package com.example.logistik.logistikgodemo;
 
 import android.content.Intent;
+import android.support.transition.Transition;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
@@ -24,15 +25,17 @@ public class InicioActivity extends AppCompatActivity {
                 Intent mainIntent = new Intent().setClass(
                         InicioActivity.this, LoginActivity.class);
                 startActivity(mainIntent);
-
+                overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
                 // Close the activity so the user won't able to go back this
                 // activity pressing Back button
                 finish();
             }
         };
 
+
         // Simulate a long loading process on application startup.
         Timer timer = new Timer();
         timer.schedule(task, SPLASH_SCREEN_DELAY);
     }
+
 }

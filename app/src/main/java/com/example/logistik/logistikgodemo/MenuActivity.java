@@ -100,9 +100,12 @@ public class MenuActivity extends AppCompatActivity
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_acercade) {
-            Intent intent = new Intent(MenuActivity.this, AcercadeActivity.class);
+        //MENU BAR
+        if (id == R.id.action_Cerrar_sesion) {
+            Intent intent = new Intent(MenuActivity.this, LoginActivity.class);
             startActivity(intent);
+            overridePendingTransition(R.anim.zoom_back_in, R.anim.zoom_back_out);
+            finish();
         }
 
         return super.onOptionsItemSelected(item);
@@ -122,18 +125,17 @@ public class MenuActivity extends AppCompatActivity
             intent.putExtra("IDViajeProceso", IDViajeProceso);
             intent.putExtra("StatusProceso", StatusProceso);
 
-
-
         } else if (id == R.id.nav_evidencias) {
           //  intent = new Intent(MenuActivity.this, Activity_seguimientoViaje.class);
         } else if (id == R.id.nav_ajustes) {
 
         } else if (id == R.id.nav_acercade) {
-            intent = new Intent(MenuActivity.this, AcercadeActivity.class);
+           // intent = new Intent(MenuActivity.this, AcercadeActivity.class);
         }
 
         if (intent != null) {
             startActivity(intent);
+            overridePendingTransition(R.anim.left_in, R.anim.left_out);
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
