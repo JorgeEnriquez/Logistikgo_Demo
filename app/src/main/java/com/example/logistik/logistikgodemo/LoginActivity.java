@@ -99,10 +99,10 @@ public class LoginActivity extends AppCompatActivity {
             alertdialog.setTitle(Html.fromHtml("<font color='#FF7F27'>Los datos están desactivados</font>"));
             alertdialog.setMessage("Activa los datos o Wi-Fi en la configuración");
             alertdialog.setCancelable(false);
-            alertdialog.setPositiveButton("Configuración", new DialogInterface.OnClickListener() {
-                public void onClick(DialogInterface alertdialog, int id) {
-                }
-            });
+//            alertdialog.setPositiveButton("Configuración", new DialogInterface.OnClickListener() {
+//                public void onClick(DialogInterface alertdialog, int id) {
+//                }
+//            });
             alertdialog.setNegativeButton("Salir", new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface alertdialog, int id) {
 //                cancelar();
