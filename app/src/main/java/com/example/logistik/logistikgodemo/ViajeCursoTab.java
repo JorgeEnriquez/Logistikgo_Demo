@@ -1,10 +1,11 @@
 package com.example.logistik.logistikgodemo;
 
+import android.content.Context;
 import android.Manifest;
 import android.app.AlertDialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.ConnectivityManager;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationListener;
@@ -53,6 +54,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Date;
 import java.util.concurrent.ExecutionException;
+
 
 public class ViajeCursoTab extends Fragment implements OnMapReadyCallback {
     Button button;
@@ -144,6 +146,8 @@ public class ViajeCursoTab extends Fragment implements OnMapReadyCallback {
 
         miUbicacion();
     }
+
+
 
     private void agregarMarcador(double lat, double lng) {
 
@@ -493,3 +497,4 @@ public class ViajeCursoTab extends Fragment implements OnMapReadyCallback {
     }
 
 }
+
