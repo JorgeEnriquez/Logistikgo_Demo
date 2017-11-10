@@ -109,10 +109,6 @@ public class LoginActivity extends AppCompatActivity {
                 }
             });
             alertdialog.show();
-
-
-
-
 //            Toast toast = Toast.makeText(this, "No hay conexión a Internet", Toast.LENGTH_SHORT);
 //            toast.setGravity(Gravity.CENTER_VERTICAL, 0,0);
 //            toast.show();

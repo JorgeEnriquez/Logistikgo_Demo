@@ -63,14 +63,13 @@ public class ViajeCursoTab extends Fragment implements OnMapReadyCallback {
     MapView mapView;
     View view;
     private Marker marcador;
-    double lat = 0.0;
-    double coordLng = 0.0;
-    double coordLat = 0.0;
+    double coordLng;
+    double coordLat;
     String strIDViaje;
     String StatusProceso;
     LatLng lastCoordenadas;
-    Date lastUpdate = new Date();
-    int secondLastUpdate = 0;
+    Date lastUpdate;
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -220,7 +219,8 @@ public class ViajeCursoTab extends Fragment implements OnMapReadyCallback {
 
                     //API debug
                     // String strURL = "http://192.168.1.54:63510/api/Viaje/Bro_SetStatus";
-                    String strURL = "https://api.logistikgo.com/api/Viaje/SetStatusViaje";
+                    //   String strURL = "https://api.logistikgo.com/api/Viaje/SetStatusViaje";
+                    String strURL = "https://192.168.1.66:63513/api/Viaje/SetStatusViaje";
 
                     JSONObject jdata = new JSONObject();
                     JSONObject jParams = new JSONObject();
@@ -257,6 +257,7 @@ public class ViajeCursoTab extends Fragment implements OnMapReadyCallback {
                     }
                     if (StatusSiguiente.equals("")) {
                         Intent intent = new Intent(getActivity(), MenuActivity.class);
+                        intent.putExtra("IDViajeProceso", "0");
                         startActivity(intent);
                     } else {
                         AlertDialog.Builder alerBuilder = new AlertDialog.Builder(getActivity());
@@ -338,11 +339,11 @@ public class ViajeCursoTab extends Fragment implements OnMapReadyCallback {
             connection.setConnectTimeout(connection_timeout);
 
             //POST
-            connection.setDoOutput(true);
-            connection.setDoInput(true);
+            //connection.setDoOutput(true);
+            // connection.setDoInput(true);
 
             //ENCABEZADOS DE LA PETICIÓN
-            //  connection.setRequestProperty("Host", "localhost:63510");
+            connection.setRequestProperty("Host", "localhost:63513");
             connection.setRequestProperty("Content-Type", "application/json; charset=utf-8");
 
             //Connect to our url
@@ -454,62 +455,50 @@ public class ViajeCursoTab extends Fragment implements OnMapReadyCallback {
     }
 
     public void SaveCoordenadas(Location location) {
-        //region SAVE COORDENADAS
-
-        //API debug
-        String strURL = "https://api.logistikgo.com/api/Maps/SaveCoordenadas";
-
-        JSONObject jdata = new JSONObject();
-        JSONObject jParams = new JSONObject();
-
-        double fLng = location.getLongitude();
-        double fLat = location.getLatitude();
-        LatLng currentCoordenadas = new LatLng(fLng, fLat);
-
-
-        // String strDViaje = strIDViaje;
-
-        try {
-            jdata.put("strURL", strURL);
-
-            jParams.put("strIDViaje", strIDViaje);
-            jParams.put("fLat", fLat);
-            jParams.put("fLng", fLng);
-
-
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-
-
-        //REALIZA LA PETICIO
-//        JSONObject jResult = null;
+//        //region SAVE COORDENADAS
+//
+//        //API debug
+//        String strURL = "https://api.logistikgo.com/api/Maps/SaveCoordenadas";
+//
+//        JSONObject jdata = new JSONObject();
+//        JSONObject jParams = new JSONObject();
+//
+//        double fLng = location.getLongitude();
+//        double fLat = location.getLatitude();
+//        LatLng currentCoordenadas = new LatLng(fLng, fLat);
+//
+//
+//        // String strDViaje = strIDViaje;
+//
 //        try {
-//            if (lastCoordenadas != null) {
-//                double distance = SphericalUtil.computeDistanceBetween(currentCoordenadas, lastCoordenadas);
-//                distance = distance / 1000;
-//                //  Toast.makeText(getActivity(), Double.toString(distance), Toast.LENGTH_SHORT).show();
+//            jdata.put("strURL", strURL);
 //
-//                if (secondLastUpdate > 30 && distance > 5) {
-//                    GetResponse(jdata, jParams);
-//                }
-//            }
+//            jParams.put("strIDViaje", strIDViaje);
+//            jParams.put("fLat", fLat);
+//            jParams.put("fLng", fLng);
 //
-
-        try {
-            JSONObject jResult = GetResponse(jdata, jParams);
-        } catch (ExecutionException e) {
-            e.printStackTrace();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-
-//            lastCoordenadas = new LatLng(fLng, fLat);
-//            lastUpdate = new Date();
-//            secondLastUpdate = lastUpdate.getMinutes();
-
+//
+//        } catch (JSONException e) {
+//            e.printStackTrace();
+//        }
+//
+//
+//        //REALIZA LA PETICIO
+////        JSONObject jResult = null;
+////        try {
+////            if (lastCoordenadas != null) {
+////                double distance = SphericalUtil.computeDistanceBetween(currentCoordenadas, lastCoordenadas);
+////                distance = distance / 1000;
+////                //  Toast.makeText(getActivity(), Double.toString(distance), Toast.LENGTH_SHORT).show();
+////
+////                if (secondLastUpdate > 30 && distance > 5) {
+////                    GetResponse(jdata, jParams);
+////                }
+////            }
+////
+//
+//        try {
+//            JSONObject jResult = GetResponse(jdata, jParams);
 //        } catch (ExecutionException e) {
 //            e.printStackTrace();
 //        } catch (InterruptedException e) {
@@ -517,8 +506,74 @@ public class ViajeCursoTab extends Fragment implements OnMapReadyCallback {
 //        } catch (JSONException e) {
 //            e.printStackTrace();
 //        }
+//
+////            lastCoordenadas = new LatLng(fLng, fLat);
+////            lastUpdate = new Date();
+////            secondLastUpdate = lastUpdate.getMinutes();
+//
+////        } catch (ExecutionException e) {
+////            e.printStackTrace();
+////        } catch (InterruptedException e) {
+////            e.printStackTrace();
+////        } catch (JSONException e) {
+////            e.printStackTrace();
+////        }
+//
+//        //endregion
 
-        //endregion
+//        if (lastCoordenadas == null){
+//            lastCoordenadas = new LatLng(location.getLatitude(), location.getLongitude());
+//        }
+        String strURL = "https://api-bkg-test.logistikgo.com/api/Maps/SaveCoordenadasBro";
+        JSONObject jdata = new JSONObject();
+        JSONObject jParams = new JSONObject();
+
+        int SecondCalculate = 30;
+        if (lastUpdate == null && lastCoordenadas == null) {
+            lastUpdate = new Date();
+            lastCoordenadas = new LatLng(location.getLatitude(), location.getLongitude());
+        }
+
+        LatLng currentCoordenadas = new LatLng(location.getLatitude(), location.getLongitude());
+        Date currentTime = new Date();
+
+        try {
+            jdata.put("strURL", strURL);
+            jParams.put("strIDViaje", strIDViaje);
+            jParams.put("fLat", currentCoordenadas.latitude);
+            jParams.put("fLng", currentCoordenadas.longitude);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        long TimeDiferenciaCoordenadas = currentTime.getTime() - lastUpdate.getTime();
+        long segundos = TimeDiferenciaCoordenadas / 1000;
+
+        if (segundos >= SecondCalculate) {
+
+            double distance = SphericalUtil.computeDistanceBetween(currentCoordenadas, lastCoordenadas);
+            int mtsDistance = (int) distance;
+//            distance = distance * 100;
+//            int cmDistance = (int) distance;
+//            Toast.makeText(getActivity(), Long.toString(segundos) + " segundos " + Integer.toString(cmDistance) + " cm", Toast.LENGTH_SHORT).show();
+            if (mtsDistance > 30) {
+//                Toast.makeText(getActivity(), "AQUI DEBERIA GUARDAR", Toast.LENGTH_SHORT).show();
+                try {
+                    JSONObject jResult = GetResponse(jdata, jParams);
+                } catch (ExecutionException e) {
+                    e.printStackTrace();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            lastUpdate = currentTime;
+            lastCoordenadas = currentCoordenadas;
+
+        }
+
     }
 
 }
