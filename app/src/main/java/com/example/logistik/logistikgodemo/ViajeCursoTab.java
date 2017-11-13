@@ -296,7 +296,7 @@ public class ViajeCursoTab extends Fragment implements OnMapReadyCallback {
 //                public void onClick(DialogInterface alertdialog, int id) {
 //                }
 //            });
-            alertdialog.setNegativeButton("Salir", new DialogInterface.OnClickListener() {
+            alertdialog.setNegativeButton("Aceptar", new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface alertdialog, int id) {
 //                cancelar();
                 }

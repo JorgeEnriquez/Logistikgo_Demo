@@ -3,6 +3,7 @@ package com.example.logistik.logistikgodemo;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.location.LocationManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
@@ -51,8 +52,11 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public void onMenuClick(View view) throws ExecutionException, InterruptedException, JSONException {
-         String HALLOWEEN_ORANGE = "#FF7F27";
+
+        String HALLOWEEN_ORANGE = "#FF7F27";
         if (isConnected()) {
+
+
             strUsuario = editUsuario.getText().toString();
             strContrasena = editContrasena.getText().toString();
 
@@ -103,7 +107,7 @@ public class LoginActivity extends AppCompatActivity {
 //                public void onClick(DialogInterface alertdialog, int id) {
 //                }
 //            });
-            alertdialog.setNegativeButton("Salir", new DialogInterface.OnClickListener() {
+            alertdialog.setNegativeButton("Aceptar", new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface alertdialog, int id) {
 //                cancelar();
                 }
@@ -258,6 +262,10 @@ public class LoginActivity extends AppCompatActivity {
 
         return (networkInfo != null && networkInfo.isConnected());
     }
+
+
+
+
 
     //CLASS ASYNC REQUEST
     public static class HttpGetRequest extends AsyncTask<JSONObject, Void, JSONObject> {
