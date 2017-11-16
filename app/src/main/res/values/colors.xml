@@ -6,5 +6,9 @@
 
     <color name="black_overlay">#66000000</color>
 
+    <color name="blue_logistik">#66ccff</color>
     <color name="orange_logistik">#f68504</color>
+
+    <color name="background_evidence">#e1e3e5</color>
+    <color name="white_logistik">#ffffff</color>
 </resources>
