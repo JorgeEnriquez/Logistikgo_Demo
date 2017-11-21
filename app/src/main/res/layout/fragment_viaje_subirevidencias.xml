@@ -1,0 +1,280 @@
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:layout_collapseParallaxMultiplier="0.0"
+    tools:context="com.example.logistik.logistikgodemo.ViajeCursoActivity">
+
+    <!-- TODO: Update blank fragment layout -->
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/Constraint"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:id="@+id/backGroundCartaPorte"
+            android:layout_width="0dp"
+            android:layout_height="160dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/backgound_list_evidence" />
+
+        <TextView
+            android:id="@+id/textViewCartaPorte"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginTop="8dp"
+            android:text="@string/section_carta_porte"
+            app:layout_constraintLeft_toLeftOf="@+id/backGroundCartaPorte"
+            app:layout_constraintTop_toTopOf="@+id/backGroundCartaPorte" />
+
+        <ImageView
+            android:id="@+id/imageViewCartaPorte"
+            android:layout_width="115dp"
+            android:layout_height="0dp"
+            android:layout_marginBottom="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/image_round"
+            android:scaleType="fitXY"
+            app:layout_constraintBottom_toBottomOf="@+id/backGroundCartaPorte"
+            app:layout_constraintLeft_toLeftOf="@+id/backGroundCartaPorte"
+            app:layout_constraintTop_toBottomOf="@+id/textViewCartaPorte"
+            app:srcCompat="@drawable/no_images" />
+
+
+        <ImageButton
+            android:id="@+id/buttonCartaPorte"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginBottom="8dp"
+            android:layout_marginLeft="80dp"
+            android:layout_marginStart="80dp"
+            android:background="@drawable/button_camera"
+            app:layout_constraintBottom_toBottomOf="@+id/backGroundCartaPorte"
+            app:layout_constraintLeft_toLeftOf="@+id/imageViewCartaPorte"
+            app:srcCompat="@drawable/ic_menu_camera" />
+
+        <EditText
+            android:id="@+id/editTextCartaPorte"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginBottom="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginTop="8dp"
+            android:ems="10"
+            android:background="@drawable/background_textview"
+            android:hint="@string/description"
+            android:isScrollContainer="true"
+            android:scrollbars = "vertical"
+            android:gravity="top"
+            android:inputType="textMultiLine"
+            android:paddingRight="40dp"
+            app:layout_constraintBottom_toBottomOf="@+id/backGroundCartaPorte"
+            app:layout_constraintLeft_toRightOf="@+id/buttonCartaPorte"
+            app:layout_constraintRight_toRightOf="@+id/backGroundCartaPorte"
+            app:layout_constraintTop_toBottomOf="@+id/textViewCartaPorte"
+            app:layout_constraintVertical_bias="0.0" />
+
+        <ImageButton
+            android:id="@+id/buttonSendCartaPorte"
+            android:layout_width="40dp"
+            android:layout_height="0dp"
+            android:background="@drawable/button_send"
+            app:srcCompat="@drawable/ic_menu_send"
+            app:layout_constraintTop_toTopOf="@+id/editTextCartaPorte"
+            android:layout_marginTop="0dp"
+            app:layout_constraintBottom_toBottomOf="@+id/editTextCartaPorte"
+            android:layout_marginBottom="0dp"
+            android:layout_marginRight="0dp"
+            app:layout_constraintRight_toRightOf="@+id/editTextCartaPorte" />
+
+        <ImageView
+            android:id="@+id/backGroundRemision"
+            android:layout_width="0dp"
+            android:layout_height="160dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/backGroundCartaPorte"
+            app:srcCompat="@drawable/backgound_list_evidence" />
+
+        <TextView
+            android:id="@+id/textViewRemision"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginTop="8dp"
+            android:text="@string/section_remition"
+            app:layout_constraintLeft_toLeftOf="@+id/backGroundRemision"
+            app:layout_constraintTop_toTopOf="@+id/backGroundRemision" />
+
+        <ImageView
+            android:id="@+id/imageViewRemision"
+            android:layout_width="115dp"
+            android:layout_height="0dp"
+            android:layout_marginBottom="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/image_round"
+            android:scaleType="fitXY"
+            app:layout_constraintBottom_toBottomOf="@+id/backGroundRemision"
+            app:layout_constraintLeft_toLeftOf="@+id/backGroundRemision"
+            app:layout_constraintTop_toBottomOf="@+id/textViewRemision"
+            app:srcCompat="@drawable/no_images" />
+
+        <ImageButton
+            android:id="@+id/buttonRemision"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginBottom="8dp"
+            android:layout_marginLeft="80dp"
+            android:layout_marginStart="80dp"
+            android:background="@drawable/button_camera"
+            app:layout_constraintBottom_toBottomOf="@+id/backGroundRemision"
+            app:layout_constraintLeft_toLeftOf="@+id/imageViewRemision"
+            app:srcCompat="@drawable/ic_menu_camera" />
+
+        <EditText
+            android:id="@+id/editTextRemision"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginBottom="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginTop="8dp"
+            android:ems="10"
+            android:background="@drawable/background_textview"
+            android:hint="@string/description"
+            android:isScrollContainer="true"
+            android:scrollbars = "vertical"
+            android:gravity="top"
+            android:inputType="textMultiLine"
+            android:paddingRight="40dp"
+            app:layout_constraintBottom_toBottomOf="@+id/backGroundRemision"
+            app:layout_constraintLeft_toRightOf="@+id/buttonRemision"
+            app:layout_constraintRight_toRightOf="@+id/backGroundRemision"
+            app:layout_constraintTop_toBottomOf="@+id/textViewRemision"
+            app:layout_constraintVertical_bias="0.452" />
+
+        <ImageButton
+            android:id="@+id/buttonSendRemision"
+            android:layout_width="40dp"
+            android:layout_height="0dp"
+            android:background="@drawable/button_send"
+            app:srcCompat="@drawable/ic_menu_send"
+            app:layout_constraintTop_toTopOf="@+id/editTextRemision"
+            android:layout_marginTop="0dp"
+            app:layout_constraintBottom_toBottomOf="@+id/editTextRemision"
+            android:layout_marginBottom="0dp"
+            android:layout_marginRight="0dp"
+            app:layout_constraintRight_toRightOf="@+id/editTextRemision" />
+
+        <ImageView
+            android:id="@+id/backgroundEvidencia"
+            android:layout_width="0dp"
+            android:layout_height="160dp"
+            android:layout_marginBottom="64dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/backGroundRemision"
+            app:srcCompat="@drawable/backgound_list_evidence" />
+
+        <TextView
+            android:id="@+id/textViewEvidencia"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
+            android:layout_marginTop="8dp"
+            android:text="@string/section_evidence"
+            app:layout_constraintLeft_toLeftOf="@+id/backgroundEvidencia"
+            app:layout_constraintTop_toTopOf="@+id/backgroundEvidencia" />
+
+        <ImageView
+            android:id="@+id/imageViewEvidencia"
+            android:layout_width="115dp"
+            android:layout_height="0dp"
+            android:layout_marginBottom="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/image_round"
+            android:scaleType="fitXY"
+            app:layout_constraintBottom_toBottomOf="@+id/backgroundEvidencia"
+            app:layout_constraintLeft_toLeftOf="@+id/backgroundEvidencia"
+            app:layout_constraintTop_toBottomOf="@+id/textViewEvidencia"
+            app:srcCompat="@drawable/no_images" />
+
+        <ImageButton
+            android:id="@+id/buttonEvidencia"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginBottom="8dp"
+            android:layout_marginLeft="80dp"
+            android:layout_marginStart="80dp"
+            android:background="@drawable/button_camera"
+            app:layout_constraintBottom_toBottomOf="@+id/backgroundEvidencia"
+            app:layout_constraintLeft_toLeftOf="@+id/imageViewEvidencia"
+            app:srcCompat="@drawable/ic_menu_camera" />
+        //She was my Lady
+        <EditText
+            android:id="@+id/editTextEvidencia"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginBottom="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginTop="8dp"
+            android:ems="10"
+            android:background="@drawable/background_textview"
+            android:hint="@string/description"
+            android:isScrollContainer="true"
+            android:scrollbars = "vertical"
+            android:gravity="top"
+            android:inputType="textMultiLine"
+            android:paddingRight="40dp"
+            app:layout_constraintBottom_toBottomOf="@+id/backgroundEvidencia"
+            app:layout_constraintHorizontal_bias="0.492"
+            app:layout_constraintLeft_toRightOf="@+id/buttonEvidencia"
+            app:layout_constraintRight_toRightOf="@+id/backgroundEvidencia"
+            app:layout_constraintTop_toBottomOf="@+id/textViewEvidencia"
+            app:layout_constraintVertical_bias="0.492" />
+
+        <ImageButton
+            android:id="@+id/buttonSendEvidencia"
+            android:layout_width="40dp"
+            android:layout_height="0dp"
+            android:background="@drawable/button_send"
+            app:srcCompat="@drawable/ic_menu_send"
+            app:layout_constraintTop_toTopOf="@+id/editTextEvidencia"
+            android:layout_marginTop="0dp"
+            app:layout_constraintBottom_toBottomOf="@+id/editTextEvidencia"
+            android:layout_marginBottom="0dp"
+            android:layout_marginRight="0dp"
+            app:layout_constraintRight_toRightOf="@+id/editTextEvidencia" />
+
+    </android.support.constraint.ConstraintLayout>
+</ScrollView>

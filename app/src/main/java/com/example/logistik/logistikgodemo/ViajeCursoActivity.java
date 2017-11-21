@@ -124,6 +124,9 @@ public class ViajeCursoActivity extends AppCompatActivity {
                     case 1:
                             InformacionTab informacionTab = new InformacionTab();
                             return informacionTab;
+                    case 2:
+                        ViajeSubirEvidenciasTab SubirEvidenciasTab = new ViajeSubirEvidenciasTab();
+                        return SubirEvidenciasTab;
 
                     default:
                         return null;
@@ -165,6 +168,8 @@ public class ViajeCursoActivity extends AppCompatActivity {
                     return getString(R.string.tab_travel);
                 case 1:
                     return getString(R.string.tab_data);
+                case 2:
+                    return getString(R.string.tab_upload_evidence);
             }
             return null;
         }
