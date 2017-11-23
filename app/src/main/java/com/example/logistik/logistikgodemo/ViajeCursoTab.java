@@ -219,8 +219,8 @@ public class ViajeCursoTab extends Fragment implements OnMapReadyCallback {
 
                     //API debug
                     // String strURL = "http://192.168.1.54:63510/api/Viaje/Bro_SetStatus";
-                    //   String strURL = "https://api.logistikgo.com/api/Viaje/SetStatusViaje";
-                    String strURL = "https://192.168.1.66:63513/api/Viaje/SetStatusViaje";
+                    String strURL = "https://api.logistikgo.com/api/Viaje/SetStatusViaje";
+                    // String strURL = "https://192.168.1.66:63513/api/Viaje/SetStatusViaje";
 
                     JSONObject jdata = new JSONObject();
                     JSONObject jParams = new JSONObject();
@@ -339,11 +339,11 @@ public class ViajeCursoTab extends Fragment implements OnMapReadyCallback {
             connection.setConnectTimeout(connection_timeout);
 
             //POST
-            //connection.setDoOutput(true);
-            // connection.setDoInput(true);
+            connection.setDoOutput(true);
+            connection.setDoInput(true);
 
             //ENCABEZADOS DE LA PETICIÓN
-            connection.setRequestProperty("Host", "localhost:63513");
+            //  connection.setRequestProperty("Host", "localhost:63513");
             connection.setRequestProperty("Content-Type", "application/json; charset=utf-8");
 
             //Connect to our url
@@ -524,7 +524,7 @@ public class ViajeCursoTab extends Fragment implements OnMapReadyCallback {
 //        if (lastCoordenadas == null){
 //            lastCoordenadas = new LatLng(location.getLatitude(), location.getLongitude());
 //        }
-        String strURL = "https://api-bkg-test.logistikgo.com/api/Maps/SaveCoordenadasBro";
+        String strURL = "https://api.logistikgo.com/api/Maps/SaveCoordenadas";
         JSONObject jdata = new JSONObject();
         JSONObject jParams = new JSONObject();
 
@@ -556,8 +556,8 @@ public class ViajeCursoTab extends Fragment implements OnMapReadyCallback {
 //            distance = distance * 100;
 //            int cmDistance = (int) distance;
 //            Toast.makeText(getActivity(), Long.toString(segundos) + " segundos " + Integer.toString(cmDistance) + " cm", Toast.LENGTH_SHORT).show();
-            if (mtsDistance > 30) {
-//                Toast.makeText(getActivity(), "AQUI DEBERIA GUARDAR", Toast.LENGTH_SHORT).show();
+            if (mtsDistance > 200) {
+//                Toast.makeText(getActivity(), "haz avanzado " + mtsDistance + " Mts.", Toast.LENGTH_SHORT).show();
                 try {
                     JSONObject jResult = GetResponse(jdata, jParams);
                 } catch (ExecutionException e) {
