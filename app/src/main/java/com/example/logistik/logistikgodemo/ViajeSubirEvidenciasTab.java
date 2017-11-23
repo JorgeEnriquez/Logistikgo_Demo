@@ -3,6 +3,7 @@ package com.example.logistik.logistikgodemo;
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
@@ -30,23 +31,17 @@ public class ViajeSubirEvidenciasTab extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_viaje_subirevidencias, container, false);
 
-        //extraemos el drawable en un bitmap
-        Drawable originalDrawable = getResources().getDrawable(R.drawable.no_images);
-        Bitmap originalBitmap = ((BitmapDrawable) originalDrawable).getBitmap();
-
-        //creamos el drawable redondeado
-        RoundedBitmapDrawable roundedDrawable = RoundedBitmapDrawableFactory.create(getResources(), originalBitmap);
-
-        //asignamos el CornerRadius
-        roundedDrawable.setCornerRadius(originalBitmap.getHeight());
-
         imageViewCartaPorte = (ImageView) view.findViewById(R.id.imageViewCartaPorte);
         imageViewRemision = (ImageView) view.findViewById(R.id.imageViewRemision);
         imageViewEvidencia = (ImageView) view.findViewById(R.id.imageViewEvidencia);
 
-        imageViewCartaPorte.setImageDrawable(roundedDrawable);
-        imageViewRemision.setImageDrawable(roundedDrawable);
-        imageViewEvidencia.setImageDrawable(roundedDrawable);
+        Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.no_images);
+        RoundedBitmapDrawable roundedBitmapDrawable = RoundedBitmapDrawableFactory.create(getResources(), bitmap);
+        roundedBitmapDrawable.setCircular(true);
+
+        imageViewCartaPorte.setImageDrawable(roundedBitmapDrawable);
+        imageViewRemision.setImageDrawable(roundedBitmapDrawable);
+        imageViewEvidencia.setImageDrawable(roundedBitmapDrawable);
 
         buttonCartaPorte = (ImageButton) view.findViewById(R.id.buttonCartaPorte);
         buttonRemision = (ImageButton) view.findViewById(R.id.buttonRemision);
