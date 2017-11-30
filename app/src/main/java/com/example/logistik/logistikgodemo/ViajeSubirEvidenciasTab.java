@@ -38,7 +38,7 @@ public class ViajeSubirEvidenciasTab extends Fragment {
     private String urlCamera = "http://10.0.2.2:63513/api/Viaje/SaveEvidenciaDigital";
     private String urlDescription = "http://10.0.2.2:63513/api/Viaje/SaveComentarioEv_Digital";
     public View view;
-
+    //Linea 41
     String RutaAPI, strCartaPorte, strRemision, strEvidencia, strFormat;
     ImageView imageViewCartaPorte, imageViewRemision, imageViewEvidencia;
     ImageButton imageButtonCartaPorte, imageButtonRemision, imageButtonEvidencia, buttonCartaPorte, buttonRemision, buttonEvidencia, buttonGlobal;
