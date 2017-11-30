@@ -23,6 +23,8 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.logistik.logistikgodemo.Config.ConexionAPIs;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -40,12 +42,14 @@ public class LoginActivity extends AppCompatActivity {
     EditText editContrasena;
     String strUsuario;
     String strContrasena;
+    String RutaAPI;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        RutaAPI = ConexionAPIs.RutaApi;
 
         editUsuario = (EditText) findViewById(R.id.editUsuario);
         editContrasena = (EditText) findViewById(R.id.editContrasena);
@@ -61,9 +65,9 @@ public class LoginActivity extends AppCompatActivity {
             strContrasena = editContrasena.getText().toString();
 
             if (ValidateForm(new EditText[]{editUsuario, editContrasena})) {
-                //API DEBUG
-                String strURL = "https://api.logistikgo.com/api/Usuarios/ValidarUsuario";
-                //API DEBUG VISUAL STUDIO
+
+                String strURL = RutaAPI + "api/Usuarios/ValidarUsuario";
+
                 JSONObject jdata = new JSONObject();
                 JSONObject jParams = new JSONObject();
 
