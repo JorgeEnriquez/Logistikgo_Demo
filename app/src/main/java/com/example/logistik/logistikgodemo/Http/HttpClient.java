@@ -1,5 +1,7 @@
 package com.example.logistik.logistikgodemo.Http;
 
+import org.json.JSONObject;
+
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -49,21 +51,30 @@ public class HttpClient {
         return baos.toByteArray();
     }
 
-    public void connectForMultipart() throws Exception {
+    public void connectForMultipart(String strFormat) throws Exception {
         con = (HttpURLConnection) ( new URL(url)).openConnection();
         con.setRequestMethod("POST");
         //  con.getAllowUserInteraction ();
         con.setDoInput(true);
         con.setDoOutput(true);
-        //  con.setRequestProperty("Host", "localhost:63513");
+        con.setRequestProperty("Host", "localhost:63513");
         con.setRequestProperty("Connection", "Keep-Alive");
-        con.setRequestProperty("Content-Type", "multipart/form-data; boundary=" + boundary);
+        if (strFormat == "Image") {
+            con.setRequestProperty("Content-Type", "multipart/form-data; boundary=" + boundary);
+        }
+        else {
+            con.setRequestProperty("Content-Type", "application/json; charset=utf-8");
+        }
         con.connect();
         os = con.getOutputStream();
     }
 
     public void addFormPart(String paramName, String value) throws Exception {
         writeParamData(paramName, value);
+    }
+
+    public void addDescription(JSONObject jsonObject) throws Exception {
+        writeParamDescription(jsonObject);
     }
 
     public void addFilePart(String paramName, String fileName, byte[] data) throws Exception {
@@ -107,5 +118,9 @@ public class HttpClient {
         os.write( ("\r\n" + value + "\r\n").getBytes());
 
 
+    }
+
+    private void writeParamDescription(JSONObject jsonObject) throws Exception {
+        os.write(jsonObject.toString().getBytes("UTF-8"));
     }
 }

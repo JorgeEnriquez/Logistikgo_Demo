@@ -17,27 +17,32 @@ import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 
 import com.example.logistik.logistikgodemo.Config.ConexionAPIs;
 import com.example.logistik.logistikgodemo.Http.HttpClient;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.ByteArrayOutputStream;
 
 public class ViajeSubirEvidenciasTab extends Fragment {
-    String IDViaje;
-    String Titulo;
+    String IDViaje, Titulo;
     String TipoArchivo = "EVIDENCIAS";
     static final int REQUEST_IMAGE_CAPTURE = 1;
     private Uri filePath;
     private ImageView mImageView;
-    private String urlCamera = "http://10.0.2.2:63518/api/Viaje/SaveEvidenciaDigital";
-    private String urlDescription = "http://10.0.2.2:63518/api/Viaje/SaveComentarioEv_Digital";
-    String RutaAPI;
+    private String urlCamera = "http://10.0.2.2:63513/api/Viaje/SaveEvidenciaDigital";
+    private String urlDescription = "http://10.0.2.2:63513/api/Viaje/SaveComentarioEv_Digital";
+    public View view;
 
+    String RutaAPI, strCartaPorte, strRemision, strEvidencia, strFormat;
     ImageView imageViewCartaPorte, imageViewRemision, imageViewEvidencia;
-    ImageButton buttonCartaPorte, buttonRemision, buttonEvidencia;
+    ImageButton imageButtonCartaPorte, imageButtonRemision, imageButtonEvidencia, buttonCartaPorte, buttonRemision, buttonEvidencia, buttonGlobal;
+    EditText edittextCartaPorte, editTextRemision, editTextEvidencia;
     Activity activity;
 
     @Override
@@ -47,70 +52,115 @@ public class ViajeSubirEvidenciasTab extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_viaje_subirevidencias, container, false);
-
+        view = inflater.inflate(R.layout.fragment_viaje_subirevidencias, container, false);
         RutaAPI = ConexionAPIs.RutaApi;
 
         Bundle bundle = getActivity().getIntent().getExtras();
         IDViaje = bundle.getString("IDViajeProceso");
 
-        //extraemos el drawable en un bitmap
-        Drawable originalDrawable = getResources().getDrawable(R.drawable.no_images);
-        Bitmap originalBitmap = ((BitmapDrawable) originalDrawable).getBitmap();
-
-        //creamos el drawable redondeado
-        RoundedBitmapDrawable roundedDrawable = RoundedBitmapDrawableFactory.create(getResources(), originalBitmap);
-
-        //asignamos el CornerRadius
-        roundedDrawable.setCornerRadius(originalBitmap.getHeight());
-
         imageViewCartaPorte = (ImageView) view.findViewById(R.id.imageViewCartaPorte);
         imageViewRemision = (ImageView) view.findViewById(R.id.imageViewRemision);
         imageViewEvidencia = (ImageView) view.findViewById(R.id.imageViewEvidencia);
 
-        imageViewCartaPorte.setImageDrawable(roundedDrawable);
-        imageViewRemision.setImageDrawable(roundedDrawable);
-        imageViewEvidencia.setImageDrawable(roundedDrawable);
+        Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.no_images);
+        RoundedBitmapDrawable roundedBitmapDrawable = RoundedBitmapDrawableFactory.create(getResources(), bitmap);
+        roundedBitmapDrawable.setCircular(true);
 
-        buttonCartaPorte = (ImageButton) view.findViewById(R.id.buttonCartaPorte);
-        buttonRemision = (ImageButton) view.findViewById(R.id.buttonRemision);
-        buttonEvidencia = (ImageButton) view.findViewById(R.id.buttonEvidencia);
+        imageViewCartaPorte.setImageDrawable(roundedBitmapDrawable);
+        imageViewRemision.setImageDrawable(roundedBitmapDrawable);
+        imageViewEvidencia.setImageDrawable(roundedBitmapDrawable);
 
-        buttonCartaPorte.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Titulo = "CARTA PORTE";
-                Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                if (takePictureIntent.resolveActivity(getActivity().getPackageManager()) != null) {
-                    startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
-                }
+        imageButtonCartaPorte = (ImageButton) view.findViewById(R.id.buttonCartaPorte);
+        imageButtonRemision = (ImageButton) view.findViewById(R.id.buttonRemision);
+        imageButtonEvidencia = (ImageButton) view.findViewById(R.id.buttonEvidencia);
 
-            }
-        });
-        buttonRemision.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Titulo = "REMISION";
-                Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                if (takePictureIntent.resolveActivity(getActivity().getPackageManager()) != null) {
-                    startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
-                }
+        edittextCartaPorte = (EditText) view.findViewById(R.id.editTextCartaPorte);
+        editTextRemision = (EditText) view.findViewById(R.id.editTextRemision);
+        editTextEvidencia = (EditText) view.findViewById(R.id.editTextEvidencia);
 
-            }
-        });
-        buttonEvidencia.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Titulo = "EVIDENCIA";
-                Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                if (takePictureIntent.resolveActivity(getActivity().getPackageManager()) != null) {
-                    startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
-                }
+        buttonCartaPorte = (ImageButton) view.findViewById(R.id.buttonSendCartaPorte);
+        buttonRemision = (ImageButton) view.findViewById(R.id.buttonSendRemision);
+        buttonEvidencia = (ImageButton) view.findViewById(R.id.buttonSendEvidencia);
 
-            }
-        });
+        disableEditText(edittextCartaPorte, buttonCartaPorte);
+        disableEditText(editTextRemision, buttonRemision);
+        disableEditText(editTextEvidencia, buttonEvidencia);
 
+        imageButtonCartaPorte.setOnClickListener(onClickListener);
+        imageButtonRemision.setOnClickListener(onClickListener);
+        imageButtonEvidencia.setOnClickListener(onClickListener);
+
+        buttonCartaPorte.setOnClickListener(onClickListener);
+        buttonRemision.setOnClickListener(onClickListener);
+        buttonEvidencia.setOnClickListener(onClickListener);
         return view;
+    }
+
+    View.OnClickListener onClickListener = new View.OnClickListener() {
+        Intent takePictureIntent;
+        @Override
+        public void onClick(View v) {
+            switch (v.getId()){
+                case R.id.buttonSendCartaPorte:
+                    Titulo = "CARTA PORTE";
+                    strCartaPorte = edittextCartaPorte.getText().toString();
+                    saveDescription(strCartaPorte, buttonCartaPorte);
+                    return;
+                case R.id.buttonSendRemision:
+                    Titulo = "REMISION";
+                    strRemision = editTextRemision.getText().toString();
+                    saveDescription(strRemision, buttonRemision);
+                    return;
+                case R.id.buttonSendEvidencia:
+                    Titulo = "EVIDENCIA";
+                    strEvidencia = editTextEvidencia.getText().toString();
+                    saveDescription(strEvidencia, buttonEvidencia);
+                    return;
+                case R.id.buttonCartaPorte:
+                    Titulo = "CARTA PORTE";
+                    takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                    if (takePictureIntent.resolveActivity(getActivity().getPackageManager()) != null) {
+                        startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
+                    }
+                    return;
+                case R.id.buttonRemision:
+                    Titulo = "REMISION";
+                    takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                    if (takePictureIntent.resolveActivity(getActivity().getPackageManager()) != null) {
+                        startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
+                    }
+                    return;
+                case R.id.buttonEvidencia:
+                    Titulo = "EVIDENCIA";
+                    takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                    if (takePictureIntent.resolveActivity(getActivity().getPackageManager()) != null) {
+                        startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
+                    }
+                    return;
+            }
+        }
+    };
+
+    private void disableEditText(EditText editText, ImageButton imageButton) {
+        editText.setFocusable(false);
+        editText.setEnabled(false);
+        editText.setCursorVisible(false);
+        editText.setFocusableInTouchMode(false);
+
+        imageButton.setEnabled(false);
+        imageButton.setFocusable(false);
+        imageButton.setBackgroundResource(R.drawable.button_disabled_send);
+    }
+
+    private void enableEditText(EditText editText, ImageButton imageButton) {
+        editText.setFocusable(true);
+        editText.setEnabled(true);
+        editText.setCursorVisible(true);
+        editText.setFocusableInTouchMode(true);
+
+        imageButton.setEnabled(true);
+        imageButton.setFocusable(true);
+        imageButton.setBackgroundResource(R.drawable.button_send);
     }
 
     public interface OnFragmentInteractionListener {
@@ -134,19 +184,33 @@ public class ViajeSubirEvidenciasTab extends Fragment {
             }
         }
     }
+
+    private void  saveDescription(String strData, ImageButton imageButton){
+        strFormat = "Description";
+        new UploadDescription().execute(strData, imageButton);
+        //Toast.makeText(getActivity(), dato, Toast.LENGTH_SHORT).show();
+    }
+
     private void sendPhoto(Bitmap bitmap) throws Exception {
         new UploadTask().execute(bitmap);
 
+        strFormat = "Image";
+
+        RoundedBitmapDrawable roundedBitmapDrawable = RoundedBitmapDrawableFactory.create(getResources(), bitmap);
+        roundedBitmapDrawable.setCircular(true);
 
         switch (Titulo) {
             case "CARTA PORTE":
-                imageViewCartaPorte.setImageBitmap(bitmap);
+                imageViewCartaPorte.setImageDrawable(roundedBitmapDrawable);
+                enableEditText(edittextCartaPorte, buttonCartaPorte);
                 return;
             case "REMISION":
-                imageViewRemision.setImageBitmap(bitmap);
+                imageViewRemision.setImageDrawable(roundedBitmapDrawable);
+                enableEditText(editTextRemision, buttonRemision);
                 return;
             case "EVIDENCIA":
-                imageViewEvidencia.setImageBitmap(bitmap);
+                imageViewEvidencia.setImageDrawable(roundedBitmapDrawable);
+                enableEditText(editTextEvidencia, buttonEvidencia);
                 return;
         }
     }
@@ -174,7 +238,7 @@ public class ViajeSubirEvidenciasTab extends Fragment {
             HttpClient client = new HttpClient(url);
 
             try {
-                client.connectForMultipart();
+                client.connectForMultipart(strFormat);
 
                 client.addFormPart("Titulo", Titulo);
                 client.addFormPart("TipoArchivo", TipoArchivo);
@@ -199,5 +263,47 @@ public class ViajeSubirEvidenciasTab extends Fragment {
             //  Toast.makeText(MainActivity.this, R.string.uploaded, Toast.LENGTH_LONG).show();
         }
 
+    }
+
+    public class UploadDescription extends AsyncTask<Object, Object, JSONObject> {
+        JSONObject jsonObjectRetunr = new JSONObject();
+        @Override
+        protected JSONObject doInBackground(Object... strings){
+            String url = urlDescription; //RutaAPI + "api/Viaje/SaveComentarioEv_Digital";
+            HttpClient client = new HttpClient(url);
+            JSONObject jsonObject = new JSONObject();
+
+            try {
+                client.connectForMultipart(strFormat);
+
+                jsonObject.put("strTitulo", Titulo);
+                jsonObject.put("TipoArchivo", TipoArchivo);
+                jsonObject.put("strIDViaje", IDViaje);
+                jsonObject.put("strObservacion", strings[0]);
+                client.addDescription(jsonObject);
+                String response = null;
+
+                client.finishMultipart();
+
+                response = client.getResponse();
+                jsonObjectRetunr.put("Button", strings[1]);
+//condicional
+            }catch (Exception e) {
+                e.printStackTrace();
+            }
+            return jsonObjectRetunr;
+        }
+
+        @Override
+        protected void onPostExecute(JSONObject jsonObject) {
+            // TODO Auto-generated method stub
+            super.onPostExecute(jsonObject);
+            try {
+                buttonGlobal = (ImageButton) jsonObject.get("Button");
+                buttonGlobal.setBackgroundResource(R.drawable.button_success_send);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
     }
 }

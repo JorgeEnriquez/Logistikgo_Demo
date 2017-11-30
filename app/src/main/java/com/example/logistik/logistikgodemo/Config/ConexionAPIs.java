@@ -10,8 +10,8 @@ public class ConexionAPIs {
 //         public static final String RutaApi = "https://api-debug.logistikgo.com/";
 
     //          TODO: Demo
-    public static final String RutaApi = "https://api-test.logistikgo.com/";
+//    public static final String RutaApi = "https://api-test.logistikgo.com/";
 
 //         TODO: Produccion
-//         public static final String RutaApi = "https://api.logistikgo.com/";
+         public static final String RutaApi = "https://api.logistikgo.com/";
 }
