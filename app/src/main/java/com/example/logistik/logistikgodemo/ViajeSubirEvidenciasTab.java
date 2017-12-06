@@ -27,7 +27,11 @@ import com.example.logistik.logistikgodemo.Http.HttpClient;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.BufferedInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.InputStream;
+import java.net.URL;
+import java.net.URLConnection;
 
 public class ViajeSubirEvidenciasTab extends Fragment {
     String IDViaje, Titulo;
@@ -214,26 +218,24 @@ public class ViajeSubirEvidenciasTab extends Fragment {
                 return;
         }
     }
-    public class UploadTask extends AsyncTask<Bitmap, Void, Void> {
+    public class UploadTask extends AsyncTask<Bitmap, Void, JSONObject> {
+        JSONObject jRes = new JSONObject();
 
         @Override
-        protected Void doInBackground(Bitmap... bitmaps) {
+        protected JSONObject doInBackground(Bitmap... bitmaps) {
             String url = RutaAPI +  "api/Viaje/SaveEvidenciaDigital";
             String BOUNDARY = "Binario";
 
             if (bitmaps[0] == null)
                 return null;
-            //  Bitmap bitmap = bitmaps[0];
+            Bitmap bitmap = bitmaps[0];
             ByteArrayOutputStream stream = new ByteArrayOutputStream();            //   bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream); // convert Bitmap to ByteArrayOutputStream
             //  InputStream in = new ByteArrayInputStream(stream.toByteArray()); // convert ByteArrayOutputStream to ByteArrayInputStream
-            Bitmap  bitmap = BitmapFactory.decodeResource(getActivity().getResources(), R.drawable.bienvenido_operador);
+            //Bitmap  bitmap = BitmapFactory.decodeResource(getActivity().getResources(), R.drawable.bienvenido_operador);
 
             ByteArrayOutputStream baos = new ByteArrayOutputStream();
-            bitmap.compress(Bitmap.CompressFormat.PNG, 0, baos);
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
             //byte[] b = bitmapToByteArray(bitmap);
-
-
-
 
             HttpClient client = new HttpClient(url);
 
@@ -244,20 +246,29 @@ public class ViajeSubirEvidenciasTab extends Fragment {
                 client.addFormPart("TipoArchivo", TipoArchivo);
                 client.addFormPart("IDViaje", IDViaje);
                 client.addFilePart("file", ".png", baos.toByteArray());
-                String response = null;
-
+                JSONObject response = null;
                 client.finishMultipart();
-
                 response = client.getResponse();
+                JSONObject jData = response.getJSONObject("jMeta");
+
+                URL _url = new URL(jData.getString("RutaAchivo"));
+                URLConnection con = _url.openConnection();
+                con.connect();
+                InputStream is = con.getInputStream();
+                BufferedInputStream bis = new BufferedInputStream(is);
+                Bitmap ImageServer = BitmapFactory.decodeStream(bis);
+                bis.close();
+
+                jRes.put("ImageServer", ImageServer);
             } catch (Exception e) {
                 e.printStackTrace();
             }
 
-            return null;
+            return jRes;
         }
 
         @Override
-        protected void onPostExecute(Void result) {
+        protected void onPostExecute(JSONObject result) {
             // TODO Auto-generated method stub
             super.onPostExecute(result);
             //  Toast.makeText(MainActivity.this, R.string.uploaded, Toast.LENGTH_LONG).show();
@@ -280,8 +291,8 @@ public class ViajeSubirEvidenciasTab extends Fragment {
                 jsonObject.put("TipoArchivo", TipoArchivo);
                 jsonObject.put("strIDViaje", IDViaje);
                 jsonObject.put("strObservacion", strings[0]);
-                client.addDescription(jsonObject);
-                String response = null;
+                client.addParamJson(jsonObject);
+                JSONObject response = null;
 
                 client.finishMultipart();
 
